@@ -13,20 +13,29 @@ public class chi_tiet_hd {
     private int masp;
     private int mahd;
     private int so_luong;
+    private int giaban;
+
+    public int getGiaban() {
+        return giaban;
+    }
+
+    public void setGiaban(int giaban) {
+        this.giaban = giaban;
+    }
+
+    public chi_tiet_hd(int masp,  int so_luong  , int giaban, int gia) {
+        this.masp = masp;
+        
+        this.so_luong = so_luong;
+        this.giaban = giaban;
+        this.gia = gia;
+    }
     private int gia;
     //private int ma_hd;
 
     public chi_tiet_hd() {
     }
 
-     
-
-    public chi_tiet_hd(int ma_chi_tiet_hd, int masp, int so_luong, int gia) {
-        this.ma_chi_tiet_hd = ma_chi_tiet_hd;
-        this.masp = masp;
-        this.so_luong = so_luong;
-        this.gia = gia;
-    }
  public chi_tiet_hd(int masp, int so_luong, int gia) {
         this.masp = masp;
         this.so_luong = so_luong;

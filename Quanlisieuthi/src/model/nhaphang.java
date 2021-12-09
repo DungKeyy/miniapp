@@ -19,6 +19,13 @@ public class nhaphang {
     public nhaphang() {
     }
 
+    public nhaphang(int mancc, int manv, String ngaynhap, int thanhtien) {
+        this.mancc = mancc;
+        this.manv = manv;
+        this.ngaynhap = ngaynhap;
+        this.thanhtien = thanhtien;
+    }
+
     public nhaphang(int manhap, int mancc, int manv, String ngaynhap, int thanhtien) {
         this.manhap = manhap;
         this.mancc = mancc;

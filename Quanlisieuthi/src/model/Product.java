@@ -17,6 +17,12 @@ public class Product {
     public Product() {
     }
 
+    public Product(String ten_sp, int gia_ban, int so_luong) {
+        this.ten_sp = ten_sp;
+        this.gia_ban = gia_ban;
+        this.so_luong = so_luong;
+    }
+
     public Product(int ma_sp, String ten_sp, int gia_nhap, int gia_ban, int so_luong) {
         this.ma_sp = ma_sp;
         this.ten_sp = ten_sp;

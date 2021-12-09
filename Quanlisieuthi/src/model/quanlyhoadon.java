@@ -13,20 +13,41 @@ public class quanlyhoadon {
     private String Date_Buy;
     private int thanhTien;
     private int manv;
+   private int sdt;
+     
     public quanlyhoadon() {
     }
 
-    public quanlyhoadon(String Date_Buy, int thanhTien) {
-        this.Date_Buy = Date_Buy;
-        this.thanhTien = thanhTien;
-    }
-
-    public quanlyhoadon(int mahd, String Date_Buy, int thanhTien) {
+    public quanlyhoadon(int mahd, String Date_Buy, int thanhTien, int manv, int sdt) {
         this.mahd = mahd;
         this.Date_Buy = Date_Buy;
         this.thanhTien = thanhTien;
+        this.manv = manv;
+        this.sdt = sdt;
     }
 
+    public quanlyhoadon(int mahd, String Date_Buy, int thanhTien, int manv) {
+        this.mahd = mahd;
+        this.Date_Buy = Date_Buy;
+        this.thanhTien = thanhTien;
+        this.manv = manv;
+    }
+
+    public quanlyhoadon(String Date_Buy, int thanhTien, int manv) {
+        this.Date_Buy = Date_Buy;
+        this.thanhTien = thanhTien;
+        this.manv = manv;
+    }
+
+    
+    public quanlyhoadon(String Date_Buy, int thanhTien, int manv, int sdt) {
+        this.Date_Buy = Date_Buy;
+        this.thanhTien = thanhTien;
+        this.manv = manv;
+        this.sdt = sdt;
+    }
+
+    
     public int getMahd() {
         return mahd;
     }
@@ -51,6 +72,32 @@ public class quanlyhoadon {
         this.thanhTien = thanhTien;
     }
 
+    public int getManv() {
+        return manv;
+    }
+
+    public void setManv(int manv) {
+        this.manv = manv;
+    }
+
+    public int getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(int sdt) {
+        this.sdt = sdt;
+    }
+
+    @Override
+    public String toString() {
+        return "quanlyhoadon{" + "mahd=" + mahd + ", Date_Buy=" + Date_Buy + ", thanhTien=" + thanhTien + ", manv=" + manv + '}';
+    }
+
+    public void getSdt(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
     
 
     

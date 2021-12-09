@@ -16,7 +16,30 @@ public class chitietnhaphang {
     private int gianhap;
     private int soluong;
     private int tongtien;
+    private String tenhang;
 
+    public String getTenhang() {
+        return tenhang;
+    }
+
+    public void setTenhang(String tenhang) {
+        this.tenhang = tenhang;
+    }
+
+    public chitietnhaphang(int ma_hang, int gianhap, int soluong, int tongtien) {
+        this.ma_hang = ma_hang;
+        this.gianhap = gianhap;
+        this.soluong = soluong;
+        this.tongtien = tongtien;
+    }
+
+    public chitietnhaphang(int gianhap, int soluong, int tongtien, String tenhang) {
+        this.gianhap = gianhap;
+        this.soluong = soluong;
+        this.tongtien = tongtien;
+        this.tenhang = tenhang;
+    }
+    
     public chitietnhaphang(int gianhap, int soluong, int tongtien) {
         this.gianhap = gianhap;
         this.soluong = soluong;

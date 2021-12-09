@@ -20,22 +20,55 @@ public class nhanvien {
     private String username;
     private String password;
     private int phan_quyen;
- 
- public nhanvien() {
+ private int luong;
+ private long thoigian;
+
+    public long getThoigian() {
+        return thoigian;
     }
- 
-    public nhanvien(int ma_nv,String ten_nv, String ngay_sinh, String gioi_tinh, String dia_chi,  int sđt_nv, String username, String password, int phan_quyen) {
+
+    public void setThoigian(long thoigian) {
+        this.thoigian = thoigian;
+    }
+
+    public nhanvien(int ma_nv, String ten_nv, String ngay_sinh, String gioi_tinh, String dia_chi, int sđt_nv, String username, String password, int phan_quyen, int luong, long thoigian) {
+        this.ma_nv = ma_nv;
         this.ten_nv = ten_nv;
         this.ngay_sinh = ngay_sinh;
         this.gioi_tinh = gioi_tinh;
         this.dia_chi = dia_chi;
-        this.ma_nv = ma_nv;
         this.sđt_nv = sđt_nv;
         this.username = username;
         this.password = password;
         this.phan_quyen = phan_quyen;
+        this.luong = luong;
+        this.thoigian = thoigian;
+    }
+ public nhanvien() {
+    }
+
+    public nhanvien(int ma_nv, String ten_nv, String ngay_sinh, String gioi_tinh, String dia_chi, int sđt_nv, String username, String password, int phan_quyen, int luong) {
+        this.ma_nv = ma_nv;
+        this.ten_nv = ten_nv;
+        this.ngay_sinh = ngay_sinh;
+        this.gioi_tinh = gioi_tinh;
+        this.dia_chi = dia_chi;
+        this.sđt_nv = sđt_nv;
+        this.username = username;
+        this.password = password;
+        this.phan_quyen = phan_quyen;
+        this.luong = luong;
+    }
+
+    public int getLuong() {
+        return luong;
+    }
+
+    public void setLuong(int luong) {
+        this.luong = luong;
     }
     
+     
     public int getMa_nv() {
         return ma_nv;
     }
