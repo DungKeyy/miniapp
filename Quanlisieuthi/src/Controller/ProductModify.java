@@ -186,11 +186,43 @@ public class ProductModify {
         }
          return ls;
      }
+      public Product getProductId(int ma_hang){
+          Product pr=new Product();
+         Connection conn = null;
+        PreparedStatement sttm = null;
+         try {
+              String query="select hang_hoa.gia_ban,  from hang_hoa INNER JOIN chi_tiet_nhap ON hang_hoa.ma_hang=chi_tiet_nhap.ma_hang order by chi_tiet_nhap.so_luong_nhap asc";
+          
+            // String query="select ma_hang,ten_hang, gia_ban,so_luong from hang_hoa where ma_hang=?";
+             conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
+           sttm=conn.prepareStatement(query); 
+            sttm.setInt(1,ma_hang);
+            ResultSet rs=sttm.executeQuery();
+            while(rs.next()){
+                pr.setMa_sp(rs.getInt(1));
+                pr.setTen_sp(rs.getString(2));
+                
+                pr.setGia_ban(rs.getInt(3));
+                pr.setSo_luong(rs.getInt(4));
+                return pr;
+            }
+                
+         } catch (Exception e) {
+                 System.out.println("Error"+e.toString());      
+         }finally{
+            try {
+                sttm.close();
+                conn.close();
+            } catch (Exception e) {
+            }
+         }
+         return null;
+      }
      // tìm theo id 
      public Product getProductById(int ma_hang) {
          Product pr=new Product();
          Connection conn = null;
-        PreparedStatement sttm = null;
+         PreparedStatement sttm = null;
          try {
              String query="select ma_hang,ten_hang, gia_ban,so_luong from hang_hoa where ma_hang=?";
              conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");

@@ -24,7 +24,7 @@ public class nhaphangDAO {
     public int getmanh(String ma){
         Connection conn=null;
        PreparedStatement ps =null;
-          
+
          try {
              String sql="select ma_nhap from nhap_hang where ngay_nhap='"+ma+"'";
              conn= databaseUtils.getDBConnect();

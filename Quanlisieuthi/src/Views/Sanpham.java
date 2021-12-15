@@ -41,7 +41,7 @@ public class Sanpham extends javax.swing.JFrame {
          DefaultTableModel model2=(DefaultTableModel)TableNhapngay.getModel();
           model2.setRowCount(0);
         for(Product pr: dao.getProducts()){
-           Object dataRow[]=new Object[5];
+           Object dataRow[]=new Object[4];
             dataRow[0]=pr.getMa_sp();
             dataRow[1]=pr.getTen_sp();
            

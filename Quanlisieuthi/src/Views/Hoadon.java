@@ -17,6 +17,8 @@ import Controller.CustomerModify;
 import Controller.HoaDonModify;
 import model.Product;
 import Controller.ProductModify;
+import java.util.Calendar;
+import java.util.Date;
 import model.chi_tiet_hd;
 import model.quanlyhoadon;
 
@@ -583,22 +585,29 @@ HoaDonModify a= new HoaDonModify();
         giaban= Integer.parseInt(txtGia.getText());
         int GIA=soluong*giaban;
         int k= pr.getsl(masp);
-        System.out.println("k: "+k+" so luong: "+soluong);
+        System.out.println("ma: "+masp+" so luong: "+soluong);
           if(k>=soluong){
               if(kb>0){
                   int q=0;
                    for(chi_tiet_hd s:sanphamct){
                       
                        if(s.getMasp()==masp){
-                           
+                           if((k-s.getSo_luong()>0)){
+                               System.out.println("so luong ne: "+(s.getSo_luong()+1));
                            //System.out.println("huou cao co: "+s.getSo_luong()+soluong);
                            q++;
                           s.setGia((s.getSo_luong()+soluong)*giaban);
                           s.setSo_luong(s.getSo_luong()+soluong);  
+                         
+                           }
+                           else{
+                               JOptionPane.showMessageDialog(this, "hi");
+                                q++;
+                           }
                        }
                        
                    }
-                   if(q==0){
+                    if(q==0){
                        chi_tiet_hd sp=new chi_tiet_hd(masp,soluong,giaban,GIA); 
                         sanphamct.add(sp);
                    }
@@ -688,11 +697,12 @@ HoaDonModify a= new HoaDonModify();
 }
      
  public String getdate(){
-     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
+      
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
     ZonedDateTime now = ZonedDateTime.now();
     
     String date= dtf.format(now);
-    return date;
+    return date; 
  }
   
 // thanh toán

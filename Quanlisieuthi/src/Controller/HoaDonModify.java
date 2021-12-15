@@ -6,6 +6,7 @@ package Controller;
 
 import database.databaseUtils;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ import model.quanlyhoadon;
 public class HoaDonModify {
    
     private Connection conn;
-    String ma="";
+    String ma;
     public HoaDonModify(){
         try {
             String url="jdbc:mysql://localhost/minimarket";
@@ -93,8 +94,8 @@ public class HoaDonModify {
             while(rs.next()){
                 quanlyhoadon s=new quanlyhoadon();
                 s.setMahd(rs.getInt("ma_hd"));
-                
-                s.setDate_Buy(rs.getString("ngay_tao"));
+               // s.getDate_Buy(rs.getDate("ngay_tao"));
+               s.setDate_Buy(rs.getString("ngay_tao"));
                 s.setManv(rs.getInt("manv_hd"));
                 s.setThanhTien(rs.getInt("thanh_toan"));
                  
@@ -160,7 +161,7 @@ public class HoaDonModify {
             ps.setInt(3, hd.getManv());
              
             ps.setInt(4, hd.getSdt());
-            ma= hd.getDate_Buy();
+            ma=   hd.getDate_Buy();
              if(ps.executeUpdate()>0){
                System.out.println(ma);
                  
@@ -178,11 +179,11 @@ public class HoaDonModify {
         try {
             String sql="insert hoa_don(ngay_tao,thanh_toan,manv_hd) values(?,?,?)";
             PreparedStatement ps=conn.prepareStatement(sql);
-            ps.setString(1, hd.getDate_Buy());
+            ps.setString(1,  hd.getDate_Buy());
             ps.setInt(2, hd.getThanhTien());
             ps.setInt(3, hd.getManv());
             
-            ma= hd.getDate_Buy();
+            ma=  hd.getDate_Buy();
              if(ps.executeUpdate()>0){
               System.out.println("tinh yeu mau nang: "+hd.getManv()+"d "+hd.getThanhTien());
             
@@ -208,7 +209,7 @@ public class HoaDonModify {
     }
     public static void main(String[] args) {
         HoaDonModify d= new HoaDonModify();
-       d.date("2021/12/7");
+        
     }
     
 }

@@ -5,10 +5,8 @@
         <group>
             <file>file:/C:/Users/trant/Documents/NetBeansProjects/Quanlisieuthi/src/Views/Login.java</file>
             <file>file:/C:/Users/trant/Documents/NetBeansProjects/Quanlisieuthi/src/Views/test.java</file>
-            <file>file:/C:/Users/trant/Documents/NetBeansProjects/Quanlisieuthi/src/Views/Hoadon.java</file>
-            <file>file:/C:/Users/trant/Documents/NetBeansProjects/Quanlisieuthi/src/model/nhanvien.java</file>
-            <file>file:/C:/Users/trant/Documents/NetBeansProjects/Quanlisieuthi/src/Views/Home_Quanli.java</file>
-            <file>file:/C:/Users/trant/Documents/NetBeansProjects/Quanlisieuthi/src/Views/luong_nv.java</file>
+            <file>file:/C:/Users/trant/Documents/NetBeansProjects/Quanlisieuthi/src/Controller/ProductModify.java</file>
+            <file>file:/C:/Users/trant/Documents/NetBeansProjects/Quanlisieuthi/src/Views/Sanpham.java</file>
             <file>file:/C:/Users/trant/Documents/NetBeansProjects/Quanlisieuthi/src/Controller/nhanvienDAO.java</file>
         </group>
     </open-files>

@@ -69,11 +69,7 @@ public class chitietnhaphangDAO {
     
     
     
-    
-    
-    
-     
-    
+ 
       public int getsoluong(int mahang){
           Connection conn = null;
         PreparedStatement sttm = null;
