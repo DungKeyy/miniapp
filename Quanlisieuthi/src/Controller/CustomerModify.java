@@ -47,7 +47,7 @@ public class CustomerModify {
         }
         return -1;   //nếu thêm k thành công
     }
-    public int getsl(int makh){
+    public String getsl(int makh){
          Connection conn=null;
        PreparedStatement ps =null;
           
@@ -57,13 +57,13 @@ public class CustomerModify {
               ps=conn.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
             if(rs.next()){
-                return rs.getInt("sdt_khach");
+                return rs.getString("sdt_khach");
             }
         } catch (Exception e) {
              System.out.println("nhoc 1: "+e);
         }
           
-         return 0;
+         return "";
      }
     //  sửa
      public int update(Customer pr){
@@ -240,15 +240,15 @@ public class CustomerModify {
          return null;
      }
      // tìm kiếm theo tên
-     public Customer getCustomerByName(String ten_khach) {
+     public Customer getCustomerByName(String sdt) {
          Customer pr=new Customer();
          Connection conn = null;
         PreparedStatement sttm = null;
          try {
-             String query="select ma_khach,ten_khach,sdt_khach from khach_hang where ten_khach=?";
+             String query="select ma_khach,ten_khach,sdt_khach from khach_hang where sdt_khach=?";
              conn= databaseUtils.getDBConnect();
            sttm=conn.prepareStatement(query); 
-            sttm.setString(1,ten_khach);
+            sttm.setString(1,sdt);
             ResultSet rs=sttm.executeQuery();
             while(rs.next()){
                 pr.setMa_khach(rs.getInt(1));

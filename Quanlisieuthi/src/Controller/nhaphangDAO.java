@@ -24,7 +24,7 @@ public class nhaphangDAO {
     public int getmanh(String ma){
         Connection conn=null;
        PreparedStatement ps =null;
-
+          
          try {
              String sql="select ma_nhap from nhap_hang where ngay_nhap='"+ma+"'";
              conn= databaseUtils.getDBConnect();
@@ -38,6 +38,60 @@ public class nhaphangDAO {
           
          return 0;
     }
+    
+    public int getctnh(int mah){
+        Connection conn=null;
+       PreparedStatement ps =null;
+          
+         try {
+             String sql="select ma_nhap from chi_tiet_nhap where ma_hang='"+mah+"'";
+             conn= databaseUtils.getDBConnect();
+              ps=conn.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                return getncc( rs.getInt("ma_nhap"));
+            }
+        } catch (Exception e) {
+             System.out.println(e);
+        }
+        return -1;
+    }
+    public int getncc(int ma_nhap){
+        Connection conn=null;
+       PreparedStatement ps =null;
+          
+         try {
+             String sql="select ma_ncc from nhap_hang where ma_nhap='"+ma_nhap+"'";
+             conn= databaseUtils.getDBConnect();
+              ps=conn.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt("ma_ncc");
+            }
+        } catch (Exception e) {
+        }
+          
+         return 0;
+    }
+    public int getgianhap(int mah){
+        Connection conn=null;
+       PreparedStatement ps =null;
+          
+         try {
+             String sql="select gia_nhap from chi_tiet_nhap where ma_hang='"+mah+"'";
+             conn= databaseUtils.getDBConnect();
+              ps=conn.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                System.out.println("hmmm");
+                 return rs.getInt("gia_nhap");
+               // return getncc( rs.getInt("gia_nhap"));
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    
     public int add(nhaphang nv){
        Connection conn=null;
        PreparedStatement sttm =null;

@@ -13,12 +13,12 @@ public class quanlyhoadon {
     private String Date_Buy;
     private int thanhTien;
     private int manv;
-   private int sdt;
+   private String sdt;
      
     public quanlyhoadon() {
     }
 
-    public quanlyhoadon(int mahd, String Date_Buy, int thanhTien, int manv, int sdt) {
+    public quanlyhoadon(int mahd, String Date_Buy, int thanhTien, int manv, String sdt) {
         this.mahd = mahd;
         this.Date_Buy = Date_Buy;
         this.thanhTien = thanhTien;
@@ -40,7 +40,7 @@ public class quanlyhoadon {
     }
 
     
-    public quanlyhoadon(String Date_Buy, int thanhTien, int manv, int sdt) {
+    public quanlyhoadon(String Date_Buy, int thanhTien, int manv, String sdt) {
         this.Date_Buy = Date_Buy;
         this.thanhTien = thanhTien;
         this.manv = manv;
@@ -80,11 +80,11 @@ public class quanlyhoadon {
         this.manv = manv;
     }
 
-    public int getSdt() {
+    public String getSdt() {
         return sdt;
     }
 
-    public void setSdt(int sdt) {
+    public void setSdt(String sdt) {
         this.sdt = sdt;
     }
 
