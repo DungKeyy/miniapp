@@ -59,7 +59,7 @@ public class nhaphangform extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PHIẾU NHẬP HÀNG");
 
-        jPanel1.setBackground(new java.awt.Color(196, 223, 230));
+        jPanel1.setBackground(new java.awt.Color(237, 250, 253));
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton3.setText("Sản phẩm mới");

@@ -75,7 +75,7 @@ ArrayList<nhanvien> nhanvienct=new ArrayList<>();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BẢNG LƯƠNG");
 
-        jPanel1.setBackground(new java.awt.Color(196, 223, 230));
+        jPanel1.setBackground(new java.awt.Color(237, 250, 253));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Thời gian làm");

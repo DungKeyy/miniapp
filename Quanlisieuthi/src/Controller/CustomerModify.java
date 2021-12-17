@@ -25,11 +25,13 @@ public class CustomerModify {
         Connection conn=null;
        PreparedStatement sttm =null;
         try {
-           String query="insert khach_hang(ten_khach,sdt_khach) values(?,?)";
+           String query="insert khach_hang(ten_khach,sdt_khach,diem) values(?,?,?)";
            conn= databaseUtils.getDBConnect();
             sttm=conn.prepareStatement(query);
             sttm.setString(1,pr.getTen_khach());
             sttm.setString(2, pr.getSdt_khach());
+            
+            sttm.setInt(3, 0);
             if(sttm.executeUpdate()>0)
             {
                 System.out.println("Thêm mới thành công");
