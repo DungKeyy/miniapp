@@ -64,6 +64,8 @@ public class Doanh_thu extends javax.swing.JFrame {
         jButton1.setText("Tìm kiếm");
         jButton1.setToolTipText("");
 
+        jPanel2.setBackground(new java.awt.Color(237, 250, 253));
+
         tableSult.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},

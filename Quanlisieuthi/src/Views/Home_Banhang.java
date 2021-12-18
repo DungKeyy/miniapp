@@ -79,6 +79,7 @@ public class Home_Banhang extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jButton2.setBackground(new java.awt.Color(215, 217, 217));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 0, 153));
         jButton2.setText("TRANG QUẢN LÝ");
