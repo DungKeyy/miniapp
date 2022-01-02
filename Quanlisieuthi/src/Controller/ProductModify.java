@@ -14,24 +14,150 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.Product;
+import model.loai_hang;
 
 /**
  *
  * @author Admin
  */
 public class ProductModify {
+       public int delete(int ma_hang){
+        Connection conn = null;
+        PreparedStatement sttm = null;
+        try {
+           String query="delete from hang_hoa where ma_hang = ?";
+           conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
+           sttm=conn.prepareStatement(query);
+            sttm.setInt(1,ma_hang);
+            
+            if(sttm.executeUpdate()>0)
+            {
+                System.out.println("Xóa thành công");
+                return 1;
+            }
+        } catch (Exception e) {
+            System.out.println("Error"+e.toString());
+        }
+        return -1;   
+    }
+      public int addloai(String k){
+        Connection conn=null;
+        PreparedStatement sttm=null;
+        try {
+           String query="insert phan_loai(ten_loai) values(?)";
+            conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
+            sttm=conn.prepareStatement(query);
+            sttm.setString(1,k);
+  
+            if(sttm.executeUpdate()>0)
+            {
+                System.out.println("Thêm mới thành công");
+                return 1;
+            }
+        } catch (Exception e) {
+            System.out.println("Error"+e.toString());
+        }finally{
+            try {
+                conn.close();
+                sttm.close();
+                       
+            } catch (Exception e) {
+            }
+        }
+        return -1;   //nếu thêm k thành công
+    }
+     
     
+     public int getmaloai(String tenloai){
+        Connection conn=null;
+       PreparedStatement ps =null;
+          
+         try {
+             String sql="select id from phan_loai where ten_loai='"+tenloai+"'";
+             conn= databaseUtils.getDBConnect();
+              ps=conn.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+        } 
+         return 0;
+    }
+      public String gettenloai(int maloai){
+        Connection conn=null;
+       PreparedStatement ps =null;
+          
+         try {
+             String sql="select ten_loai from phan_loai where id='"+maloai+"'";
+             conn= databaseUtils.getDBConnect();
+              ps=conn.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                return rs.getString("ten_loai");
+            }
+        } catch (Exception e) {
+        } 
+         return "";
+    }
+      public int uploai(int maloai, String k){
+         Connection conn = null;
+        PreparedStatement sttm = null;
+         try {
+              String query="update phan_loai set ten_loai=? where id=?";
+             conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
+             sttm=conn.prepareStatement(query);
+             sttm.setString(1, k);
+             
+               sttm.setInt(2,maloai);
+                if(sttm.executeUpdate()>0)
+                    {
+                        System.out.println("sửa thành công");
+                        return 1;
+                    }
+         } catch (Exception e) {
+             System.out.println("nhoc 2: "+e);
+         }
+         return -1;
+     }
+     
+     public List<loai_hang> getloaihang(){
+         List<loai_hang>ls=new ArrayList<>();
+        Connection conn=null;
+        Statement sttm=null;
+         try {
+            String sql="select ten_loai from phan_loai";
+             conn = DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
+            sttm=conn.createStatement();
+            ResultSet rs=sttm.executeQuery(sql);
+            while(rs.next()){
+                loai_hang loai= new loai_hang();
+                 loai.setLoaihang(rs.getString("ten_loai"));
+               
+                ls.add(loai);                  
+            }
+             System.out.println(ls);
+            return ls;
+         } catch (Exception e) {
+             System.out.println(e);
+         }
+         return ls;
+     }
+     //show tất cả
+     
+   
      public int add(Product pr){
         Connection conn=null;
         PreparedStatement sttm=null;
         try {
-           String query="insert hang_hoa(ten_hang,gia_ban,so_luong) values(?,?,?)";
+           String query="insert hang_hoa(ten_hang,gia_ban,so_luong,id) values(?,?,?,?)";
             conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
             sttm=conn.prepareStatement(query);
             sttm.setString(1,pr.getTen_sp());
  
             sttm.setInt(2, pr.getGia_ban());
             sttm.setInt(3, pr.getSo_luong());
+            sttm.setInt(4, pr.getMaloai());
             if(sttm.executeUpdate()>0)
             {
                 System.out.println("Thêm mới thành công");
@@ -130,7 +256,7 @@ public class ProductModify {
         Connection conn = null;
         PreparedStatement sttm = null;
         try {
-           String query="update hang_hoa set ten_hang=? ,gia_ban=?,so_luong=? where ma_hang=?";
+           String query="update hang_hoa set ten_hang=? ,gia_ban=?,so_luong=?,id=? where ma_hang=?";
             conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
             sttm=conn.prepareStatement(query);
              
@@ -139,7 +265,8 @@ public class ProductModify {
             sttm.setInt(2, pr.getGia_ban());
              
             sttm.setInt(3, pr.getSo_luong());
-             sttm.setInt(4, pr.getMa_sp());
+            sttm.setInt(4, pr.getMaloai());
+             sttm.setInt(5, pr.getMa_sp());
             if(sttm.executeUpdate()>0)
             {
                 System.out.println("sửa thành công");
@@ -175,26 +302,7 @@ public class ProductModify {
          return 0;
     }
      //xóa theo id
-     public int delete(int ma_hang){
-        Connection conn = null;
-        PreparedStatement sttm = null;
-        try {
-           String query="delete from hang_hoa where ma_hang = ?";
-           conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
-           sttm=conn.prepareStatement(query);
-            sttm.setInt(1,ma_hang);
-            
-            if(sttm.executeUpdate()>0)
-            {
-                System.out.println("Xóa thành công");
-                return 1;
-            }
-        } catch (Exception e) {
-            System.out.println("Error"+e.toString());
-        }
-        return -1;   
-    }
-     
+    
      //show tất cả
      
      public List<Product> getProduct(){
@@ -202,7 +310,7 @@ public class ProductModify {
         Connection conn=null;
         Statement sttm=null;
         try {
-            String query="select ma_hang,ten_hang, gia_ban,so_luong from hang_hoa";
+            String query="select ma_hang,ten_hang, gia_ban,so_luong,id from hang_hoa";
             conn = DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
             sttm=conn.createStatement();
             ResultSet rs=sttm.executeQuery(query);
@@ -213,6 +321,7 @@ public class ProductModify {
               
                 pr.setGia_ban(rs.getInt(3));
                 pr.setSo_luong(rs.getInt(4));
+                pr.setMaloai(rs.getInt(5));
                 ls.add(pr);                  
             }
         } catch (Exception e) {
@@ -231,7 +340,7 @@ public class ProductModify {
          Connection conn = null;
         PreparedStatement sttm = null;
          try {
-             String query="select ma_hang,ten_hang, gia_ban,so_luong from hang_hoa where ma_hang=?";
+             String query="select ma_hang,ten_hang, gia_ban,so_luong,id from hang_hoa where ma_hang=?";
              conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
            sttm=conn.prepareStatement(query); 
             sttm.setInt(1,ma_hang);
@@ -242,6 +351,7 @@ public class ProductModify {
                 
                 pr.setGia_ban(rs.getInt(3));
                 pr.setSo_luong(rs.getInt(4));
+                pr.setMaloai(rs.getInt(5));
                 return pr;
             }
                 
@@ -262,7 +372,7 @@ public class ProductModify {
          Connection conn = null;
         PreparedStatement sttm = null;
          try {
-             String query="select ma_hang,ten_hang ,gia_ban,so_luong from hang_hoa where ten_hang=?";
+             String query="select ma_hang,ten_hang ,gia_ban,so_luong,id from hang_hoa where ten_hang=?";
              conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
            sttm=conn.prepareStatement(query); 
             sttm.setString(1,ten_hang);
@@ -273,6 +383,7 @@ public class ProductModify {
                 
                 pr.setGia_ban(rs.getInt(3));
                  pr.setSo_luong(rs.getInt(4));
+                  pr.setMaloai(rs.getInt(5));
                 return pr;
             }
                 
@@ -292,12 +403,13 @@ public class ProductModify {
         a.add(pr);
         return a;
     }
+      
     public List<Product> getProducts(){
          List<Product> ls=new ArrayList<>();
         Connection conn=null;
         Statement sttm=null;
         try {// order by  so_luong asc
-            String query="select * from hang_hoa order by  so_luong asc";
+            String query="select ma_hang,ten_hang,so_luong,id from hang_hoa order by  so_luong asc";
            conn= databaseUtils.getDBConnect();
             sttm=conn.createStatement();
             ResultSet rs=sttm.executeQuery(query);
@@ -308,8 +420,9 @@ public class ProductModify {
                 if(sl>=0&&sl<=2){
                     pr.setMa_sp(rs.getInt(1));
                     pr.setTen_sp(rs.getString(2));
-                    pr.setGia_ban(rs.getInt(3));
-                    pr.setSo_luong(rs.getInt(4));
+                    
+                    pr.setSo_luong(rs.getInt(3));
+                     pr.setMaloai(rs.getInt(4));
                     ls.add(pr);
                     System.out.println(sl +"sl ne");
                 }
@@ -317,6 +430,35 @@ public class ProductModify {
                    // System.out.println("that bai roi");
                 }
                                    
+            }
+        } catch (Exception e) {
+            System.out.println("Error hmmmm má ôi"+e.toString());
+        }finally{
+            try {
+                sttm.close();conn.close();
+            } catch (Exception e) {
+            }
+        }
+         return ls;
+     }
+     public List<Product> getProductbyloai(int ma){
+         List<Product> ls=new ArrayList<>();
+        Connection conn=null;
+        Statement sttm=null;
+        try {// ma_hang,ten_hang, gia_ban,so_luong,id
+            String query="select ma_hang,ten_hang,gia_ban,so_luong from hang_hoa where id='"+ma+"'";
+           conn= databaseUtils.getDBConnect();
+            sttm=conn.createStatement();
+            ResultSet rs=sttm.executeQuery(query);
+            while(rs.next()){
+                
+                Product pr=new Product();
+                    pr.setMa_sp(rs.getInt(1));
+                    pr.setTen_sp(rs.getString(2));  
+                    pr.setSo_luong(rs.getInt(3));
+                    pr.setGia_ban(rs.getInt(4));
+                    ls.add(pr);
+                                  
             }
         } catch (Exception e) {
             System.out.println("Error hmmmm má ôi"+e.toString());

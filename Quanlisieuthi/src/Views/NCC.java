@@ -67,6 +67,11 @@ public class NCC extends javax.swing.JFrame {
     txtten_ncc.setText(pr.getTen_ncc());
     txt_sdt.setText(pr.getSdt_ncc());
     }
+    public void reset(){
+        txtMa.setText("");
+        txt_sdt.setText("");
+        txtten_ncc.setText("");
+    }
     public NCC() {
         initComponents();
         fillDataTable();// gọi tên cái hàm đó ra
@@ -358,6 +363,7 @@ public class NCC extends javax.swing.JFrame {
            try {
                if(dao.add(pr)>0){
                    JOptionPane.showMessageDialog(this, "!!! Thêm thành công");
+                   reset();
                    fillDataTable();
                }
                
@@ -381,6 +387,8 @@ public class NCC extends javax.swing.JFrame {
                 }else{
                     dao.delete(Integer.parseInt(txtMa.getText()));
                 }
+                reset();
+                JOptionPane.showMessageDialog(this, "Xóa thành công");
                 fillDataTable();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi: "+e.toString());
@@ -407,6 +415,7 @@ public class NCC extends javax.swing.JFrame {
            try {
                quan_ly_ncc prNew=getModel();
                if(dao.update(prNew)>0){
+                   reset();
                    JOptionPane.showMessageDialog(this, "!!! Sửa thành công");
                    fillDataTable();
                }

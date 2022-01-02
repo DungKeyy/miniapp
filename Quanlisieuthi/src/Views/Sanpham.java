@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Product;
 import Controller.nhanvienDAO;
+import model.loai_hang;
 
 /**
  *
@@ -31,13 +32,20 @@ public class Sanpham extends javax.swing.JFrame {
             Object dataRow[]=new Object[5];
             dataRow[0]=pr.getMa_sp();
             dataRow[1]=pr.getTen_sp();
-            
-            dataRow[2]=pr.getGia_ban();
-            dataRow[3]=pr.getSo_luong();
+             dataRow[2]=dao.gettenloai(pr.getMaloai());
+            dataRow[3]=pr.getGia_ban();
+            dataRow[4]=pr.getSo_luong();
             model.addRow(dataRow);
         }
     }
-     
+      public void loaisp(){
+        ProductModify dai= new ProductModify();
+         for (loai_hang pr : dai.getloaihang()){
+             System.out.println("1---"+pr.getLoaihang());
+             
+             jComboBox1.addItem(pr.getLoaihang());
+         }
+    }
     // check phần nhập thông tin các trường dữ liệu của các chức năng còn update, xóa, tìm kiếm
     public boolean validateForm(){
         if(txtMa.getText().isEmpty() || txt_ten.getText().isEmpty() ||  txt_giaBan.getText().isEmpty()||txtsoluong.getText().isEmpty()){
@@ -57,7 +65,7 @@ public class Sanpham extends javax.swing.JFrame {
         Product pr=new Product();
         pr.setMa_sp(Integer.parseInt(txtMa.getText()));
         pr.setTen_sp(txt_ten.getText());
-      
+       pr.setMaloai(dao.getmaloai((String) jComboBox1.getSelectedItem()));
         pr.setGia_ban(Integer.parseInt(txt_giaBan.getText()));
         pr.setSo_luong(Integer.parseInt(txtsoluong.getText()));
         return pr;
@@ -66,7 +74,7 @@ public class Sanpham extends javax.swing.JFrame {
       public Product getModel_add(){
         Product pr=new Product();
         pr.setTen_sp(txt_ten.getText());
-       
+       pr.setMaloai(dao.getmaloai((String) jComboBox1.getSelectedItem()));
         pr.setGia_ban(Integer.parseInt(txt_giaBan.getText()));
          pr.setSo_luong(Integer.parseInt(txtsoluong.getText()));
         return pr;
@@ -75,14 +83,14 @@ public class Sanpham extends javax.swing.JFrame {
     public void setModel(Product pr){
     txtMa.setText(String.valueOf(pr.getMa_sp()));
     txt_ten.setText(pr.getTen_sp());
-   
+    jComboBox1.setSelectedItem(dao.gettenloai(Integer.parseInt(String.valueOf(pr.getMaloai()))));
     txt_giaBan.setText(String.valueOf(pr.getGia_ban()));
     txtsoluong.setText(String.valueOf(pr.getSo_luong()));
     }
     public Sanpham() {
         initComponents();
        fillDataTable();// gọi tên cái hàm đó ra
-       
+       loaisp();
     }
  
   
@@ -101,6 +109,8 @@ public class Sanpham extends javax.swing.JFrame {
         txtMa = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtsoluong = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -151,6 +161,8 @@ public class Sanpham extends javax.swing.JFrame {
 
         txtsoluong.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(193, 217, 214)));
 
+        jLabel2.setText("loai");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -164,11 +176,16 @@ public class Sanpham extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtsoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtsoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(txtMa)
                     .addComponent(txt_ten)
                     .addComponent(txt_giaBan, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +205,9 @@ public class Sanpham extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtsoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -246,17 +265,17 @@ public class Sanpham extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã hàng", "Tên hàng", "Giá bán", "Số lượng"
+                "Mã hàng", "Tên hàng", "loai hang", "Giá bán", "Số lượng"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -274,10 +293,10 @@ public class Sanpham extends javax.swing.JFrame {
             table.getColumnModel().getColumn(0).setMaxWidth(70);
             table.getColumnModel().getColumn(1).setMinWidth(170);
             table.getColumnModel().getColumn(1).setMaxWidth(170);
-            table.getColumnModel().getColumn(2).setMinWidth(80);
-            table.getColumnModel().getColumn(2).setMaxWidth(80);
             table.getColumnModel().getColumn(3).setMinWidth(80);
             table.getColumnModel().getColumn(3).setMaxWidth(80);
+            table.getColumnModel().getColumn(4).setMinWidth(80);
+            table.getColumnModel().getColumn(4).setMaxWidth(80);
         }
 
         jButton3.setText("Nhập hàng");
@@ -308,16 +327,16 @@ public class Sanpham extends javax.swing.JFrame {
                                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 38, Short.MAX_VALUE)
+                .addGap(0, 28, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -363,7 +382,7 @@ public class Sanpham extends javax.swing.JFrame {
                     dao.delete(Integer.parseInt(txtMa.getText()));
                 }
                 fillDataTable();
-                 
+                 JOptionPane.showMessageDialog(this, "Xóa thành công!");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi: "+e.toString());
             }
@@ -477,7 +496,9 @@ public class Sanpham extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

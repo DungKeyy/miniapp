@@ -321,7 +321,7 @@ public class Nhanvien extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -450,7 +450,7 @@ public class Nhanvien extends javax.swing.JFrame {
         nv.setNgay_sinh(JDate.getText());
         nv.setGioi_tinh(JGioitinh.getText());
         nv.setDia_chi(JDiachi.getText());
-        nv.setSđt_nv(Integer.parseInt(Jsdt.getText()));
+        nv.setSđt_nv(Jsdt.getText());
         nv.setUsername(JUsername.getText());
         nv.setPassword(JPassword.getText());
         nv.setPhan_quyen(Integer.parseInt(JPhanquyen.getText()));
@@ -464,7 +464,7 @@ public class Nhanvien extends javax.swing.JFrame {
         nv.setNgay_sinh(JDate.getText());
         nv.setGioi_tinh(JGioitinh.getText());
         nv.setDia_chi(JDiachi.getText());
-        nv.setSđt_nv(Integer.parseInt(Jsdt.getText()));
+        nv.setSđt_nv(Jsdt.getText());
         nv.setUsername(JUsername.getText());
         nv.setPassword(JPassword.getText());
         nv.setPhan_quyen(Integer.parseInt(JPhanquyen.getText()));
@@ -487,13 +487,13 @@ public class Nhanvien extends javax.swing.JFrame {
                 }
                
             } catch (Exception e) {
-                 JOptionPane.showMessageDialog(this, "loi");
+                 JOptionPane.showMessageDialog(this, "lỗi");
             } 
             reset();
-            JOptionPane.showMessageDialog(null, "luu thanh cong");
+            JOptionPane.showMessageDialog(null, "Thêm thành công");
         }
         else{
-            JOptionPane.showMessageDialog(null, "nhap thieu thong tin");
+            JOptionPane.showMessageDialog(null, "Nhập thiếu thông tin!");
             
         } 
        
@@ -506,7 +506,7 @@ public class Nhanvien extends javax.swing.JFrame {
             try {
                 nhanvien nv= getModel();
                 if(dao.edit(nv)>0){
-                    JOptionPane.showMessageDialog(this, "sua thanh cong");
+                    JOptionPane.showMessageDialog(this, "Sửa thành công!");
                     fillData();
                     reset();
                 }
@@ -515,7 +515,7 @@ public class Nhanvien extends javax.swing.JFrame {
             }
         }
          else{
-            JError.setText("nhap thieu thong tin");
+            JError.setText("Nhập thiếu thông tin!");
         }
     }//GEN-LAST:event_BEditActionPerformed
     public void setModel(nhanvien nv){
@@ -524,7 +524,7 @@ public class Nhanvien extends javax.swing.JFrame {
         JDate.setText(nv.getNgay_sinh());
         JGioitinh.setText(nv.getGioi_tinh());
         JDiachi.setText(nv.getDia_chi());
-        Jsdt.setText(String.valueOf(nv.getSđt_nv()));
+        Jsdt.setText(nv.getSđt_nv());
         JUsername.setText(nv.getUsername());
         JPassword.setText(nv.getPassword());
         JPhanquyen.setText(String.valueOf(nv.getPhan_quyen()));
@@ -542,7 +542,7 @@ public class Nhanvien extends javax.swing.JFrame {
     private void BDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDeleteActionPerformed
         // TODO add your handling code here:
         if(JManv.getText().isEmpty()|| manv.length()==0){
-            JOptionPane.showMessageDialog(this, "ban chua nhap ma_nv de xoa");
+            JOptionPane.showMessageDialog(this, "Bạn chưa nhập mã nhân viên để xóa!");
         }
         else{
              try {
@@ -554,6 +554,7 @@ public class Nhanvien extends javax.swing.JFrame {
                     dao.del(Integer.parseInt(JManv.getText()));
                     reset();
                 }
+                JOptionPane.showMessageDialog(this, "Xóa thành công");
                 fillData();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.toString());

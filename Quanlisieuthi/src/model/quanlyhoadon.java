@@ -14,8 +14,17 @@ public class quanlyhoadon {
     private int thanhTien;
     private int manv;
    private String sdt;
+   private String tennv;
      
     public quanlyhoadon() {
+    }
+
+    public quanlyhoadon(int mahd, String Date_Buy, int thanhTien, String sdt, String tennv) {
+        this.mahd = mahd;
+        this.Date_Buy = Date_Buy;
+        this.thanhTien = thanhTien;
+        this.sdt = sdt;
+        this.tennv = tennv;
     }
 
     public quanlyhoadon(int mahd, String Date_Buy, int thanhTien, int manv, String sdt) {
@@ -86,6 +95,14 @@ public class quanlyhoadon {
 
     public void setSdt(String sdt) {
         this.sdt = sdt;
+    }
+
+    public String getTennv() {
+        return tennv;
+    }
+
+    public void setTennv(String tennv) {
+        this.tennv = tennv;
     }
 
     @Override

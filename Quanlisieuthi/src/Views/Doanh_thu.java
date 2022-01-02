@@ -7,12 +7,13 @@ package Views;
 
 import Controller.HoaDonModify;
 import Views.Home_Quanli;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.quanlyhoadon;
 
 /**
- *    //DOANH THU DE SAU DI
+ *    
  * @author Admin
  */
 public class Doanh_thu extends javax.swing.JFrame {
@@ -20,18 +21,34 @@ public class Doanh_thu extends javax.swing.JFrame {
     /**
      * Creates new form Doanh_thu
      */
-    private List<quanlyhoadon> hoadon;
-      private DefaultTableModel ModelHD;
-    public Doanh_thu() {
+   private List<quanlyhoadon> hoadon;
+    HoaDonModify a = new HoaDonModify();
+    private DefaultTableModel ModelDT;
+    String date="";
+    public Doanh_thu(){
         initComponents();
-        this.setLocationRelativeTo(null);
-        ModelHD= (DefaultTableModel) tableSult.getModel();
+        setLocationRelativeTo(null);
+        ModelDT =(DefaultTableModel) table_doanhthu.getModel();
         showTable();
     }
-       public void showTable(){
-           hoadon = new HoaDonModify().getListHD();
-           
-       }
+    public void showTable()
+    {
+         ModelDT.setRowCount(0);
+         int tonggia = 0;
+        for (quanlyhoadon hd : a.findbyDate(date)) {//
+            Object dataRow[]=new Object[3];
+            dataRow[0]=hd.getMahd();
+            dataRow[1]=hd.getDate_Buy();
+            dataRow[2]=hd.getThanhTien();
+            ModelDT.addRow(dataRow);
+
+        }
+       for (int i = 0; i < table_doanhthu.getRowCount(); i++) {
+            tonggia += Integer.parseInt(table_doanhthu.getValueAt(i, 2).toString());
+        }
+        j_tong.setText("Tổng doanh thu: "+tonggia + " VND");
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,12 +60,14 @@ public class Doanh_thu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        Jsearch = new javax.swing.JTextField();
+        btnFind = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableSult = new javax.swing.JTable();
+        table_doanhthu = new javax.swing.JTable();
+        j_tong = new javax.swing.JLabel();
+        DateChooser = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DOANH THU BÁN HÀNG");
@@ -60,13 +79,18 @@ public class Doanh_thu extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DOANH THU BÁN HÀNG");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton1.setText("Tìm kiếm");
-        jButton1.setToolTipText("");
+        btnFind.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnFind.setText("Tìm kiếm");
+        btnFind.setToolTipText("");
+        btnFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(237, 250, 253));
 
-        tableSult.setModel(new javax.swing.table.DefaultTableModel(
+        table_doanhthu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -85,10 +109,10 @@ public class Doanh_thu extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tableSult);
-        if (tableSult.getColumnModel().getColumnCount() > 0) {
-            tableSult.getColumnModel().getColumn(0).setMinWidth(70);
-            tableSult.getColumnModel().getColumn(0).setMaxWidth(70);
+        jScrollPane2.setViewportView(table_doanhthu);
+        if (table_doanhthu.getColumnModel().getColumnCount() > 0) {
+            table_doanhthu.getColumnModel().getColumn(0).setMinWidth(70);
+            table_doanhthu.getColumnModel().getColumn(0).setMaxWidth(70);
         }
 
         jScrollPane1.setViewportView(jScrollPane2);
@@ -110,30 +134,49 @@ public class Doanh_thu extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        j_tong.setText("Tổng Doanh Thu: ");
+
+        jButton1.setText("thoat");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Jsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(btnFind)
+                        .addGap(87, 87, 87)
+                        .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(j_tong)))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Jsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(j_tong)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -149,6 +192,22 @@ public class Doanh_thu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+// tìm kiếm
+    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
+        // TODO add your handling code here:
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+       date=dateFormat.format(DateChooser.getDate());
+        System.out.println("test date ne: "+date);
+        showTable();
+    }//GEN-LAST:event_btnFindActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+                        //Home_Quanli ah = new  Home_Quanli();
+                        Home_Quanli ah= new Home_Quanli();
+                      ah.show();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,13 +245,15 @@ public class Doanh_thu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Jsearch;
+    private com.toedter.calendar.JDateChooser DateChooser;
+    private javax.swing.JButton btnFind;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tableSult;
+    private javax.swing.JLabel j_tong;
+    private javax.swing.JTable table_doanhthu;
     // End of variables declaration//GEN-END:variables
 }

@@ -32,13 +32,13 @@ public class Chitet_hdModify {
          Connection conn = null;
         PreparedStatement sttm = null;
          try {              
-             String query="SELECT chi_tiet_hd.ma_hang,chi_tiet_hd.so_luong,hang_hoa.gia_ban,chi_tiet_hd.tong_tien FROM chi_tiet_hd,hang_hoa WHERE chi_tiet_hd.ma_hang=hang_hoa.ma_hang and ma_hd=?";
+             String query="SELECT hang_hoa.ten_hang,chi_tiet_hd.so_luong,hang_hoa.gia_ban,chi_tiet_hd.tong_tien FROM chi_tiet_hd,hang_hoa WHERE chi_tiet_hd.ma_hang=hang_hoa.ma_hang and ma_hd=?";
              conn=DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");                 // ma_chi_tiet_hd,ma_hang,so_luong,tong_tien
            sttm=conn.prepareStatement(query); 
             sttm.setInt(1,ma_hd);
             ResultSet rs=sttm.executeQuery();
             while(rs.next()){
-                chi_tiet_hd pr=new chi_tiet_hd(rs.getInt("ma_hang"),rs.getInt("so_luong"),rs.getInt("gia_ban"),rs.getInt("tong_tien"));
+                chi_tiet_hd pr=new chi_tiet_hd(rs.getString("ten_hang"),rs.getInt("so_luong"),rs.getInt("gia_ban"),rs.getInt("tong_tien"));
                list.add(pr);
             }
                 

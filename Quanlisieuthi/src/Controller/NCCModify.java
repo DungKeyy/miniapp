@@ -47,6 +47,25 @@ public class NCCModify {
         }
         return -1;   //nếu thêm k thành công
     }
+    
+     public int getmancc(String tenncc){
+        Connection conn=null;
+       PreparedStatement ps =null;
+          
+         try {
+             String sql="select ma_ncc from nha_cc where ten_ncc='"+tenncc+"'";
+             conn= databaseUtils.getDBConnect();
+              ps=conn.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt("ma_ncc");
+            }
+        } catch (Exception e) {
+             System.out.println(e);
+        } 
+         return 0;
+    }
+     
     //  sửa
      public int update(quan_ly_ncc pr){
         Connection conn = null;
@@ -123,6 +142,22 @@ public class NCCModify {
         }
          return ls;
      }
+      public String gettenncc(int maloai){
+        Connection conn=null;
+       PreparedStatement ps =null;
+          
+         try {
+             String sql="select ten_ncc from nha_cc where ma_ncc='"+maloai+"'";
+             conn= databaseUtils.getDBConnect();
+              ps=conn.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                return rs.getString("ten_ncc");
+            }
+        } catch (Exception e) {
+        } 
+         return "";
+    }
      // tìm theo id 
      public quan_ly_ncc getProducterById(int ma_ncc) {
          quan_ly_ncc pr=new quan_ly_ncc();
@@ -181,4 +216,8 @@ public class NCCModify {
          }
          return null;// nếu k tìm thấy thì trả về null
      }
+     public static void main(String[] args) {
+        NCCModify m= new NCCModify();
+         System.out.println(m.getmancc("Công ty sữa Vinamilk"));
+    }
 }

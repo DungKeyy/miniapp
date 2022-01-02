@@ -10,13 +10,38 @@ package model;
  * @author trant
  */
 public class chitietnhaphang {
-    private int machitiet_nh;
+   
     private int ma_nhap;
     private int ma_hang;
     private int gianhap;
     private int soluong;
     private int tongtien;
     private String tenhang;
+private int loai;
+
+    public chitietnhaphang(int gianhap, int soluong, int tongtien, String tenhang, int loai) {
+        this.gianhap = gianhap;
+        this.soluong = soluong;
+        this.tongtien = tongtien;
+        this.tenhang = tenhang;
+        this.loai = loai;
+    }
+
+    public chitietnhaphang(int ma_nhap, int ma_hang, int gianhap, int soluong, int tongtien) {
+        this.ma_nhap = ma_nhap;
+        this.ma_hang = ma_hang;
+        this.gianhap = gianhap;
+        this.soluong = soluong;
+        this.tongtien = tongtien;
+    }
+
+    public int getLoai() {
+        return loai;
+    }
+
+    public void setLoai(int loai) {
+        this.loai = loai;
+    }
 
     public String getTenhang() {
         return tenhang;
@@ -49,27 +74,8 @@ public class chitietnhaphang {
     public chitietnhaphang() {
     }
 
-    public chitietnhaphang(int machitiet_nh, int ma_nhap, int ma_hang, int gianhap, int soluong, int tongtien) {
-        this.machitiet_nh = machitiet_nh;
-        this.ma_nhap = ma_nhap;
-        this.ma_hang = ma_hang;
-        this.gianhap = gianhap;
-        this.soluong = soluong;
-        this.tongtien = tongtien;
-    }
-
-    @Override
-    public String toString() {
-        return "chitietnhaphang{" + "machitiet_nh=" + machitiet_nh + ", ma_nhap=" + ma_nhap + ", ma_hang=" + ma_hang + ", gianhap=" + gianhap + ", soluong=" + soluong + ", tongtien=" + tongtien + '}';
-    }
-
-    public int getMachitiet_nh() {
-        return machitiet_nh;
-    }
-
-    public void setMachitiet_nh(int machitiet_nh) {
-        this.machitiet_nh = machitiet_nh;
-    }
+    
+ 
 
     public int getMa_nhap() {
         return ma_nhap;

@@ -27,14 +27,14 @@ public class chitietnhaphangDAO {
        PreparedStatement ps =null;
          
         ArrayList<chitietnhaphang> list=new ArrayList<>();
-        String sql="select ma_chi_tiet_nhap, ma_nhap,ma_hang,so_luong_nhap,gia_nhap,tong_tien_nhap from chi_tiet_nhap";
+        String sql="select   ma_nhap,ma_hang,so_luong_nhap,gia_nhap,tong_tien_nhap from chi_tiet_nhap";
         try {
              conn= databaseUtils.getDBConnect();
              ps=conn.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 chitietnhaphang s= new chitietnhaphang();
-                s.setMachitiet_nh(rs.getInt("ma_chi_tiet_nhap"));
+              
                 s.setMa_nhap(rs.getInt("ma_nhap"));
                 s.setMa_hang(rs.getInt("ma_hang"));
                 s.setSoluong(rs.getInt("so_luong_nhap"));
@@ -68,9 +68,77 @@ public class chitietnhaphangDAO {
     }
     
     
-    
-    
-    
+     public int getmanhap(int mahang){
+          Connection conn = null;
+        PreparedStatement sttm = null;
+          try {
+
+              String sql= "Select ma_nhap from chi_tiet_nhap where ma_hang='"+mahang+"'";
+             conn= databaseUtils.getDBConnect();
+            sttm=conn.prepareStatement(sql);
+            ResultSet rs=sttm.executeQuery();
+  
+           if(rs.next())
+            {
+                System.out.println("hi");
+                 int k= rs.getInt("ma_nhap");
+                 System.out.println(k+ "day a");
+                return k;
+            }
+          } catch (Exception e) {
+              System.out.println("day ne: "+e);
+          }
+           
+          return -1;
+      }
+      public int getmancc(int manhap){
+          Connection conn = null;
+        PreparedStatement sttm = null;
+          try {
+
+              String sql= "Select ma_ncc from nhap_hang where ma_nhap='"+manhap+"'";
+             conn= databaseUtils.getDBConnect();
+            sttm=conn.prepareStatement(sql);
+            ResultSet rs=sttm.executeQuery();
+  
+           if(rs.next())
+            {
+                System.out.println("hi");
+                 int k= rs.getInt("ma_ncc");
+                 System.out.println(k+ "day a");
+                return k;
+            }
+          } catch (Exception e) {
+              System.out.println("day ne: "+e);
+          }
+           
+          return -1;
+      }
+     
+    //Select ma_nhap from chi_tiet_nhap where ma_hang=
+     public int getgianhap(int mahang){
+          Connection conn = null;
+        PreparedStatement sttm = null;
+          try {
+
+              String sql= "Select gia_nhap from chi_tiet_nhap where ma_hang='"+mahang+"'";
+             conn= databaseUtils.getDBConnect();
+            sttm=conn.prepareStatement(sql);
+            ResultSet rs=sttm.executeQuery();
+  
+           if(rs.next())
+            {
+                System.out.println("hi");
+                 int k= rs.getInt("gia_nhap");
+                 System.out.println(k+ "day a");
+                return k;
+            }
+          } catch (Exception e) {
+              System.out.println("day ne: "+e);
+          }
+           
+          return -1;
+      }
     
      
     
@@ -97,6 +165,7 @@ public class chitietnhaphangDAO {
            
           return -1;
       }
+      /*
       public ArrayList<chitietnhaphang> getchi_tiet_nhByMa_nh(int ma_nh) {
          ArrayList<chitietnhaphang> list=new ArrayList<>();        
          Connection conn = null;
@@ -125,12 +194,13 @@ public class chitietnhaphangDAO {
             }
          }
          return list;
-     }
-      public int addnh(chitietnhaphang hd, int k){
+     }*/
+      public int addnh(chitietnhaphang hd){
          Connection conn = null;
         PreparedStatement ps = null;
         try {
-            String sql="insert chi_tiet_nhap(ma_nhap,ma_hang,so_luong_nhap,gia_nhap,tong_tien_nhap) values(?,?,?,?)";
+            String sql="insert chi_tiet_nhap(ma_nhap,ma_hang,so_luong_nhap,gia_nhap,tong_tien_nhap) values(?,?,?,?,?)";
+             conn= databaseUtils.getDBConnect();
               ps=conn.prepareStatement(sql);
             ps.setInt(1,hd.getMa_nhap());
             ps.setInt(2, hd.getMa_hang());
@@ -318,7 +388,7 @@ public class chitietnhaphangDAO {
                 nv.setGioi_tinh(rs.getString(4));
                  
                nv.setDia_chi(rs.getString(5));
-              nv.setSđt_nv(rs.getInt(6));
+              nv.setSđt_nv(rs.getString(6));
              
               nv.setUsername(rs.getString(7));
               nv.setPassword(rs.getString(8));

@@ -14,13 +14,29 @@ public class Product {
     private int gia_nhap;
     private int gia_ban;
     private int so_luong;
+    private int maloai;
     public Product() {
+    }
+
+    public int getMaloai() {
+        return maloai;
+    }
+
+    public void setMaloai(int maloai) {
+        this.maloai = maloai;
     }
 
     public Product(String ten_sp, int gia_ban, int so_luong) {
         this.ten_sp = ten_sp;
         this.gia_ban = gia_ban;
         this.so_luong = so_luong;
+    }
+
+    public Product(String ten_sp, int gia_ban, int so_luong, int maloai) {
+        this.ten_sp = ten_sp;
+        this.gia_ban = gia_ban;
+        this.so_luong = so_luong;
+        this.maloai = maloai;
     }
 
     public Product(int ma_sp, String ten_sp, int gia_nhap, int gia_ban, int so_luong) {

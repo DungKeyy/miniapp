@@ -16,7 +16,7 @@ public class nhanvien {
     private String gioi_tinh;
     private String dia_chi;
     
-    private int sđt_nv;
+    private String sđt_nv;
     private String username;
     private String password;
     private int phan_quyen;
@@ -31,7 +31,7 @@ public class nhanvien {
         this.thoigian = thoigian;
     }
 
-    public nhanvien(int ma_nv, String ten_nv, String ngay_sinh, String gioi_tinh, String dia_chi, int sđt_nv, String username, String password, int phan_quyen, int luong, long thoigian) {
+    public nhanvien(int ma_nv, String ten_nv, String ngay_sinh, String gioi_tinh, String dia_chi, String sđt_nv, String username, String password, int phan_quyen, int luong, long thoigian) {
         this.ma_nv = ma_nv;
         this.ten_nv = ten_nv;
         this.ngay_sinh = ngay_sinh;
@@ -47,7 +47,7 @@ public class nhanvien {
  public nhanvien() {
     }
 
-    public nhanvien(int ma_nv, String ten_nv, String ngay_sinh, String gioi_tinh, String dia_chi, int sđt_nv, String username, String password, int phan_quyen, int luong) {
+    public nhanvien(int ma_nv, String ten_nv, String ngay_sinh, String gioi_tinh, String dia_chi, String sđt_nv, String username, String password, int phan_quyen, int luong) {
         this.ma_nv = ma_nv;
         this.ten_nv = ten_nv;
         this.ngay_sinh = ngay_sinh;
@@ -114,11 +114,11 @@ public class nhanvien {
 
     
 
-    public int getSđt_nv() {
+    public String getSđt_nv() {
         return sđt_nv;
     }
 
-    public void setSđt_nv(int sđt_nv) {
+    public void setSđt_nv(String sđt_nv) {
         this.sđt_nv = sđt_nv;
     }
 

@@ -46,6 +46,11 @@ public class Khach_hang extends javax.swing.JFrame {
         }
         return true;
     }
+    public void reset(){
+        txtMa.setText("");
+        txtSdt.setText("");
+        txtTen.setText("");
+    }
     //lấy dữ liệu từ cái form nhập dùng cho các chức năng update, xóa, tìm kiếm
     public Customer getModel(){
         Customer pr=new Customer();
@@ -320,7 +325,9 @@ public class Khach_hang extends javax.swing.JFrame {
                 }else{
                     dao.delete(Integer.parseInt(txtMa.getText()));
                 }
+                reset();
                 fillDataTable();
+                 JOptionPane.showMessageDialog(this, "Xóa thành công");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi: "+e.toString());
             }
@@ -352,6 +359,7 @@ public class Khach_hang extends javax.swing.JFrame {
            try {
                Customer prNew=getModel();
                if(dao.update(prNew)>0){
+                   reset();
                    JOptionPane.showMessageDialog(this, "!!! Sửa thành công");
                    fillDataTable();
                }

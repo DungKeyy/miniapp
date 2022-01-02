@@ -9,18 +9,33 @@ package model;
  * @author Admin
  */
 public class chi_tiet_hd {
-    private int ma_chi_tiet_hd;
+   private int ma_chi_tiet_hd;
     private int masp;
     private int mahd;
     private int so_luong;
     private int giaban;
-
+    private String ten_sp;
     public int getGiaban() {
         return giaban;
     }
 
+    public String getTen_sp() {
+        return ten_sp;
+    }
+
+    public void setTen_sp(String ten_sp) {
+        this.ten_sp = ten_sp;
+    }
+
     public void setGiaban(int giaban) {
         this.giaban = giaban;
+    }
+
+    public chi_tiet_hd(String ten_sp,int so_luong, int giaban,  int gia) {
+        this.ten_sp = ten_sp;
+        this.so_luong = so_luong;
+        this.giaban = giaban;
+        this.gia = gia;
     }
 
     public chi_tiet_hd(int masp,  int so_luong  , int giaban, int gia) {
@@ -80,8 +95,6 @@ public class chi_tiet_hd {
     public void setGia(int gia) {
         this.gia = gia;
     }
-    
-
     
     
 }

@@ -33,7 +33,7 @@ public class nhanvienDAO {
            sttm.setString(2, nv.getNgay_sinh());
            sttm.setString(3, nv.getGioi_tinh());
            sttm.setString(4, nv.getDia_chi());
-            sttm.setInt(5, nv.getSđt_nv());
+            sttm.setString(5, nv.getSđt_nv());
            sttm.setString(6, nv.getUsername());
            sttm.setString(7, nv.getPassword());
            sttm.setInt(8, nv.getPhan_quyen());
@@ -95,7 +95,7 @@ public class nhanvienDAO {
            sttm.setString(3, nv.getGioi_tinh());
            sttm.setString(4, nv.getDia_chi());
             
-            sttm.setInt(5, nv.getSđt_nv());
+            sttm.setString(5, nv.getSđt_nv());
            sttm.setString(6, nv.getUsername());
            sttm.setString(7, nv.getPassword());
            sttm.setInt(8, nv.getPhan_quyen());
@@ -186,7 +186,7 @@ public class nhanvienDAO {
                 nv.setGioi_tinh(rs.getString(4));
                  
                nv.setDia_chi(rs.getString(5));
-              nv.setSđt_nv(rs.getInt(6));
+              nv.setSđt_nv(rs.getString(6));
              
               nv.setUsername(rs.getString(7));
               nv.setPassword(rs.getString(8));
@@ -262,7 +262,7 @@ public class nhanvienDAO {
                 nv.setGioi_tinh(rs.getString(4));
                  
                nv.setDia_chi(rs.getString(5));
-              nv.setSđt_nv(rs.getInt(6));
+              nv.setSđt_nv(rs.getString(6));
              
               nv.setUsername(rs.getString(7));
               nv.setPassword(rs.getString(8));

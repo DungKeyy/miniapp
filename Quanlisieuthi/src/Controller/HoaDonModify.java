@@ -74,18 +74,185 @@ public class HoaDonModify {
             System.out.println("loi gi k biet: "+e.toString());
         }
     }
-    public ArrayList<quanlyhoadon> getListHD(){
-    
-           
+    //Tim kiem hoa don theo ngay ở form doanh thu
+    public ArrayList<quanlyhoadon> findbyDate(String Date){
+       ArrayList<quanlyhoadon> list = new ArrayList<>();
+        Connection conn = null;
+        Statement sttm = null;
+        ResultSet rs = null;
+        try {
+
+            String sql = "select ma_hd,ngay_tao,thanh_toan from hoa_don where ngay_tao like '%" + Date +"%'" ;
+            conn = databaseUtils.getDBConnect();
+            sttm = conn.createStatement();
+            rs = sttm.executeQuery(sql);
+
+            while (rs.next()) {
+                quanlyhoadon s = new quanlyhoadon();
+                s.setMahd(rs.getInt(1));
+
+                s.setDate_Buy(rs.getString(2));
+                
+                s.setThanhTien(rs.getInt(3));
+
+                
+                list.add(s);
+            }
+            System.out.println(list);
+        } catch (Exception e) {
+            System.out.println("fail: " + e.toString());
+        }
+        return list;
+    }
+//Tim kiem hoa don theo ngay mà hd chua có sdt (ở form tìm kiếm hóa đơn)
+    public ArrayList<quanlyhoadon> findbyDate2(String Date){
+       ArrayList<quanlyhoadon> list = new ArrayList<>();
+        Connection conn = null;
+        Statement sttm = null;
+        ResultSet rs = null;
+        try {
+
+            String sql = "select hoa_don.ma_hd,nhanvien.ten_nv,hoa_don.ngay_tao,hoa_don.thanh_toan FROM hoa_don,nhanvien WHERE hoa_don.manv_hd=nhanvien.ma_nv AND ma_khach IS NULL AND ngay_tao like '%" + Date +"%'" ;
+            conn = databaseUtils.getDBConnect();
+            sttm = conn.createStatement();
+            rs = sttm.executeQuery(sql);
+            
+            while (rs.next()) {
+                quanlyhoadon s = new quanlyhoadon();
+                s.setMahd(rs.getInt(1));
+               
+                s.setTennv(rs.getString(2));
+                s.setDate_Buy(rs.getString(3));
+                s.setThanhTien(rs.getInt(4));
+                list.add(s);
+            }
+            System.out.println(list);
+        } catch (Exception e) {
+            System.out.println("fail: " + e.toString());
+        }
+        return list;
+    }    
+    //Tim kiem hoa don theo ngay mà hóa đơn có  sdt (ở form tìm kiếm hóa đơn)
+    public ArrayList<quanlyhoadon> findbyDate3(String Date){
+       ArrayList<quanlyhoadon> list = new ArrayList<>();
+        Connection conn = null;
+        Statement sttm = null;
+        ResultSet rs = null;
+        try {
+
+            String sql = "select hoa_don.ma_hd,khach_hang.sdt_khach,nhanvien.ten_nv,hoa_don.ngay_tao,hoa_don.thanh_toan FROM hoa_don,khach_hang,nhanvien WHERE hoa_don.ma_khach=khach_hang.ma_khach AND hoa_don.manv_hd=nhanvien.ma_nv AND ngay_tao like '%" + Date +"%'" ;
+            conn = databaseUtils.getDBConnect();
+            sttm = conn.createStatement();
+            rs = sttm.executeQuery(sql);
+            
+            while (rs.next()) {
+                quanlyhoadon s = new quanlyhoadon();
+                s.setMahd(rs.getInt(1));
+               s.setSdt(rs.getString(2));
+                s.setTennv(rs.getString(3));
+                s.setDate_Buy(rs.getString(4));
+                s.setThanhTien(rs.getInt(5));
+                list.add(s);
+            }
+            System.out.println(list);
+        } catch (Exception e) {
+            System.out.println("fail: " + e.toString());
+        }
+        return list;
+    }
+//Tim kiem hoa don theo sdt khách
+    public ArrayList<quanlyhoadon> findbySDT(String sdt){
+       ArrayList<quanlyhoadon> list = new ArrayList<>();
+        Connection conn = null;
+        Statement sttm = null;
+        ResultSet rs = null;
+        try {
+
+            String sql = "SELECT hoa_don.ma_hd,khach_hang.sdt_khach,nhanvien.ten_nv,hoa_don.ngay_tao,hoa_don.thanh_toan FROM hoa_don,khach_hang,nhanvien WHERE hoa_don.ma_khach=khach_hang.ma_khach AND hoa_don.manv_hd=nhanvien.ma_nv AND sdt_khach="+sdt;
+            conn = databaseUtils.getDBConnect();
+            sttm = conn.createStatement();
+            rs = sttm.executeQuery(sql);
+            
+            while (rs.next()) {
+                quanlyhoadon s = new quanlyhoadon();
+                s.setMahd(rs.getInt(1));
+                s.setSdt(rs.getString(2));
+                s.setTennv(rs.getString(3));
+                s.setDate_Buy(rs.getString(4));
+                s.setThanhTien(rs.getInt(5));
+                list.add(s);
+            }
+            System.out.println(list);
+        } catch (Exception e) {
+            System.out.println("fail: " + e.toString());
+        }
+        return list;
+    }
+// tìm kiếm hóa đơn theo tên nhân viên khi trong hóa đơn có sdt
+    public ArrayList<quanlyhoadon> findbyName1(String ten){
+       ArrayList<quanlyhoadon> list = new ArrayList<>();
+        Connection conn = null;
+        Statement sttm = null;
+        ResultSet rs = null;
+        try {
+
+            String sql = "SELECT hoa_don.ma_hd,khach_hang.sdt_khach,nhanvien.ten_nv,hoa_don.ngay_tao,hoa_don.thanh_toan FROM hoa_don,khach_hang,nhanvien WHERE hoa_don.ma_khach=khach_hang.ma_khach AND hoa_don.manv_hd=nhanvien.ma_nv AND ten_nv='"+ten+"'";
+            conn = databaseUtils.getDBConnect();
+            sttm = conn.createStatement();
+            rs = sttm.executeQuery(sql);
+            
+            while (rs.next()) {
+                quanlyhoadon s = new quanlyhoadon();
+                s.setMahd(rs.getInt(1));
+                s.setSdt(rs.getString(2));
+                s.setTennv(rs.getString(3));
+                s.setDate_Buy(rs.getString(4));
+                s.setThanhTien(rs.getInt(5));
+                list.add(s);
+            }
+            System.out.println(list);
+        } catch (Exception e) {
+            System.out.println("fail: " + e.toString());
+        }
+        return list;
+    }
+    // tìm kiếm hóa đơn theo tên nhân viên khi trong hóa đơn k có sdt
+    public ArrayList<quanlyhoadon> findbyName2(String ten){
+       ArrayList<quanlyhoadon> list = new ArrayList<>();
+        Connection conn = null;
+        Statement sttm = null;
+        ResultSet rs = null;
+        try {
+
+            String sql = "SELECT hoa_don.ma_hd,nhanvien.ten_nv,hoa_don.ngay_tao,hoa_don.thanh_toan FROM hoa_don,nhanvien WHERE hoa_don.ma_khach IS NULL AND hoa_don.manv_hd=nhanvien.ma_nv AND ten_nv='"+ten+"'";
+            conn = databaseUtils.getDBConnect();
+            sttm = conn.createStatement();
+            rs = sttm.executeQuery(sql);
+            
+            while (rs.next()) {
+                quanlyhoadon s = new quanlyhoadon();
+                s.setMahd(rs.getInt(1));
+                //s.setSdt(rs.getString(2));
+                s.setTennv(rs.getString(2));
+                s.setDate_Buy(rs.getString(3));
+                s.setThanhTien(rs.getInt(4));
+                list.add(s);
+            }
+            System.out.println(list);
+        } catch (Exception e) {
+            System.out.println("fail: " + e.toString());
+        }
+        return list;
+    }
+  // lấy ra toàn bộ hóa đơn  
+    public ArrayList<quanlyhoadon> getListHD(){     
     ArrayList<quanlyhoadon> list=new ArrayList<>();
       Connection conn= null;
        Statement sttm= null;
        ResultSet rs=null;
      CustomerModify kh = new CustomerModify();
-        try {
-           
-            
-        String sql="select * from hoa_don";
+        try {    
+        String sql="SELECT hoa_don.ma_hd,nhanvien.ten_nv,hoa_don.ma_khach,hoa_don.ngay_tao,hoa_don.thanh_toan FROM hoa_don,nhanvien WHERE hoa_don.manv_hd=nhanvien.ma_nv";
         conn= databaseUtils.getDBConnect();
            sttm= conn.createStatement();
            rs= sttm.executeQuery(sql);
@@ -94,11 +261,13 @@ public class HoaDonModify {
                 quanlyhoadon s=new quanlyhoadon();
                 s.setMahd(rs.getInt("ma_hd"));
                 
+                s.setSdt(kh.getsl(rs.getInt("ma_khach")));
+                s.setTennv(rs.getString("ten_nv"));
                 s.setDate_Buy(rs.getString("ngay_tao"));
-                s.setManv(rs.getInt("manv_hd"));
+                
                 s.setThanhTien(rs.getInt("thanh_toan"));
                  
-                s.setSdt(kh.getsl(rs.getInt("ma_khach")));
+                
                 list.add(s);
             }
         } catch (Exception e) {
