@@ -31,6 +31,16 @@ public class chi_tiet_hd {
         this.giaban = giaban;
     }
 
+    public chi_tiet_hd(int masp,String ten_sp, int so_luong, int giaban,  int gia) {
+        
+        this.masp = masp;
+        this.ten_sp = ten_sp;
+        this.so_luong = so_luong;
+        this.giaban = giaban;
+        
+        this.gia = gia;
+    }
+
     public chi_tiet_hd(String ten_sp,int so_luong, int giaban,  int gia) {
         this.ten_sp = ten_sp;
         this.so_luong = so_luong;
@@ -95,6 +105,5 @@ public class chi_tiet_hd {
     public void setGia(int gia) {
         this.gia = gia;
     }
-    
     
 }

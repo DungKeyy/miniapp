@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.Product;
 import model.loai_hang;
 
@@ -52,6 +53,7 @@ public class ProductModify {
             if(sttm.executeUpdate()>0)
             {
                 System.out.println("Thêm mới thành công");
+                JOptionPane.showMessageDialog(null, "Thêm mới thành công");
                 return 1;
             }
         } catch (Exception e) {
@@ -113,6 +115,7 @@ public class ProductModify {
                 if(sttm.executeUpdate()>0)
                     {
                         System.out.println("sửa thành công");
+                         JOptionPane.showMessageDialog(null, "Sửa thành công");
                         return 1;
                     }
          } catch (Exception e) {

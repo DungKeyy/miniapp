@@ -104,6 +104,36 @@ public class HoaDonModify {
         }
         return list;
     }
+    //Tim kiem hoa don theo tháng ở form doanh thu
+    public ArrayList<quanlyhoadon> findbyMonth(String month){
+       ArrayList<quanlyhoadon> list = new ArrayList<>();
+        Connection conn = null;
+        Statement sttm = null;
+        ResultSet rs = null;
+        try {
+
+            String sql = "select ma_hd,ngay_tao,thanh_toan from hoa_don where ngay_tao like '%-" + month +"-%'" ;
+            conn = databaseUtils.getDBConnect();
+            sttm = conn.createStatement();
+            rs = sttm.executeQuery(sql);
+
+            while (rs.next()) {
+                quanlyhoadon s = new quanlyhoadon();
+                s.setMahd(rs.getInt(1));
+
+                s.setDate_Buy(rs.getString(2));
+                
+                s.setThanhTien(rs.getInt(3));
+
+                
+                list.add(s);
+            }
+            System.out.println(list);
+        } catch (Exception e) {
+            System.out.println("fail: " + e.toString());
+        }
+        return list;
+    }
 //Tim kiem hoa don theo ngay mà hd chua có sdt (ở form tìm kiếm hóa đơn)
     public ArrayList<quanlyhoadon> findbyDate2(String Date){
        ArrayList<quanlyhoadon> list = new ArrayList<>();

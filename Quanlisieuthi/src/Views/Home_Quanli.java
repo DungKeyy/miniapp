@@ -32,62 +32,64 @@ public class Home_Quanli extends javax.swing.JFrame {
      * Creates new form Home_Quanli
      */
     private List<quanlyhoadon> hoadon;
-    HoaDonModify a= new HoaDonModify();
-     private DefaultTableModel ModelHD;
-  
-     
+    HoaDonModify a = new HoaDonModify();
+    private DefaultTableModel ModelHD;
+
     public Home_Quanli() {
         initComponents();
-        ModelHD=(DefaultTableModel) tablequanly.getModel();
+        this.setLocationRelativeTo(null);
+        ModelHD = (DefaultTableModel) tablequanly.getModel();
         showTableHD();
     }
-     private void showTableHD(){
-        hoadon=new HoaDonModify().getListHD();
+
+    private void showTableHD() {
+        hoadon = new HoaDonModify().getListHD();
         ModelHD.setRowCount(0);
-        int tonggia=0;
-        
-        for(quanlyhoadon hd:hoadon){
-            
+        int tonggia = 0;
+
+        for (quanlyhoadon hd : hoadon) {
+
             try {
-                String k= hd.getDate_Buy();  
+                String k = hd.getDate_Buy();
                 // *** note that it's "yyyy-MM-dd hh:mm:ss" not "yyyy-mm-dd hh:mm:ss"
                 SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 SimpleDateFormat d2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 Date date = dt.parse(k);
-               
-                Date da= d2.parse(getdate());
-                
+
+                Date da = d2.parse(getdate());
+
                 // *** same for the format String below
                 SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
-               
-                if(dt1.format(da).equals(dt1.format(date))){
-                     System.out.println("hi");
-                ModelHD.addRow(new Object[]{
-                    tablequanly.getRowCount()+1,hd.getMahd(),hd.getDate_Buy(), hd.getThanhTien()
-                });
+
+                if (dt1.format(da).equals(dt1.format(date))) {
+                    System.out.println("hi");
+                    ModelHD.addRow(new Object[]{
+                        tablequanly.getRowCount() + 1, hd.getMahd(), hd.getDate_Buy(), hd.getThanhTien()
+                    });
                 }
             } catch (ParseException ex) {
                 System.out.println("u la troi");
                 Logger.getLogger(Home_Quanli.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        for(int i=0;i<tablequanly.getRowCount();i++)
-        {
-            tonggia+=Integer.parseInt(tablequanly.getValueAt(i, 3).toString());
+        for (int i = 0; i < tablequanly.getRowCount(); i++) {
+            tonggia += Integer.parseInt(tablequanly.getValueAt(i, 3).toString());
         }
-        jtonghd.setText(tonggia+"");
-        
-    }
-      public String getdate(){
-      
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-    SimpleDateFormat d2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    ZonedDateTime now = ZonedDateTime.now();
-    
-    String date= dtf.format(now);
+        jtonghd.setText(tonggia + "");
 
-    return date; 
- }
+    }
+
+    public String getdate() {
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat d2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        ZonedDateTime now = ZonedDateTime.now();
+
+        String date = dtf.format(now);
+
+        return date;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -202,7 +204,13 @@ public class Home_Quanli extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("doanh thu");
+        jButton3.setBackground(new java.awt.Color(139, 203, 200));
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(0, 0, 102));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/doanhthu.png"))); // NOI18N
+        jButton3.setText("DOANH THU");
+        jButton3.setToolTipText("Doanh thu");
+        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -224,10 +232,11 @@ public class Home_Quanli extends javax.swing.JFrame {
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton6)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,9 +247,9 @@ public class Home_Quanli extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -249,23 +258,22 @@ public class Home_Quanli extends javax.swing.JFrame {
         jLabel2.setText("Hóa đơn bán trong ngày");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Tổng tiền: ");
+
+        jtonghd.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(193, 217, 214)));
 
         jPanel1.setBackground(new java.awt.Color(70, 110, 115));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 34)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("QUẢN LÝ BÁN HÀNG");
+        jLabel1.setText("QUẢN LÝ SIÊU THỊ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 99, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 965, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,9 +356,10 @@ public class Home_Quanli extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(jtonghd))
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtonghd, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -369,9 +378,9 @@ public class Home_Quanli extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtonghd)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                            .addComponent(jtonghd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -393,57 +402,57 @@ public class Home_Quanli extends javax.swing.JFrame {
     private void BNhanvienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNhanvienActionPerformed
         // TODO add your handling code here:
         dispose();
-        Nhanvien nv= new Nhanvien();
+        Nhanvien nv = new Nhanvien();
         nv.show();
-                     
+
     }//GEN-LAST:event_BNhanvienActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         dispose();
-        Sanpham sp= new Sanpham();
+        Sanpham sp = new Sanpham();
         sp.show();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         dispose();
-        NCC ncc= new NCC();
+        NCC ncc = new NCC();
         ncc.show();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Login k= new Login();
-        
-        System.out.println( k.returnma());
+        Login k = new Login();
+
+        System.out.println(k.returnma());
         dispose();
-        Khach_hang nv= new Khach_hang();
+        Khach_hang nv = new Khach_hang();
         nv.show();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-          dispose();
-                        //Home_Quanli ah = new  Home_Quanli();
-                        Login ah= new Login();
-                      ah.show();
+        dispose();
+        //Home_Quanli ah = new  Home_Quanli();
+        Login ah = new Login();
+        ah.show();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         dispose();
-                        //Home_Quanli ah = new  Home_Quanli();
-                        Home_Banhang ah= new Home_Banhang();
-                      ah.show();
+        dispose();
+        //Home_Quanli ah = new  Home_Quanli();
+        Home_Banhang ah = new Home_Banhang();
+        ah.show();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         dispose();
-                        //Home_Quanli ah = new  Home_Quanli();
-                        Doanh_thu ah= new Doanh_thu();
-                      ah.show();
+        //Home_Quanli ah = new  Home_Quanli();
+        Doanh_thu ah = new Doanh_thu();
+        ah.show();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

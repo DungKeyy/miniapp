@@ -151,6 +151,8 @@ public class nhanvien {
         return "nhanvien{" + "ma_nv=" + ma_nv + ", ten_nv=" + ten_nv + ", ngay_sinh=" + ngay_sinh + ", gioi_tinh=" + gioi_tinh + ", dia_chi=" + dia_chi + ", s\u0111t_nv=" + sđt_nv + ", username=" + username + ", password=" + password + ", phan_quyen=" + phan_quyen + '}';
     }
 
+ 
+
     
     
 }

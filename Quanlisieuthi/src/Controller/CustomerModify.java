@@ -20,6 +20,7 @@ import model.Customer;
  * @author Admin
  */
 public class CustomerModify {
+     
     // thêm mới
     public int add(Customer pr){
         Connection conn=null;
@@ -241,7 +242,7 @@ public class CustomerModify {
          }
          return null;
      }
-     // tìm kiếm theo tên
+     // tìm kiếm theo sdt
      public Customer getCustomerByName(String sdt) {
          Customer pr=new Customer();
          Connection conn = null;

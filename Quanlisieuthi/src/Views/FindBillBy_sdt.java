@@ -22,23 +22,24 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
      * Creates new form FindBillBy_sdt
      */
     private Hoadon home;
-   
-   Chitet_hdModify dao = new Chitet_hdModify();
+
+    Chitet_hdModify dao = new Chitet_hdModify();
     HoaDonModify a = new HoaDonModify();
-    ArrayList<quanlyhoadon> hoadon=new ArrayList<>();
+    ArrayList<quanlyhoadon> hoadon = new ArrayList<>();
     ArrayList<chi_tiet_hd> sanphamct = new ArrayList<>();
     private DefaultTableModel ModelFind;
     private DefaultTableModel ModelSPCT;
     int selectedIndex;
-    String sdt="";
+    String sdt = "";
+
     public FindBillBy_sdt(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Tìm kiếm hóa đơn bằng sđt");
-        home=(Hoadon) parent;
-      ModelFind=(DefaultTableModel) table_find.getModel();
-      ModelSPCT=(DefaultTableModel) table_chitiet.getModel();
+        home = (Hoadon) parent;
+        ModelFind = (DefaultTableModel) table_find.getModel();
+        ModelSPCT = (DefaultTableModel) table_chitiet.getModel();
         //showTableHD_find();
         //showTableSPCT();
         showTableHD_find();
@@ -47,35 +48,38 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
         showTableSPCT_themmoi();
         showTableHD_themmoi();
     }
+
     //hiển thị bảng hóa đơn khi tìm kiếm
-  public void showTableHD_find(){
+    public void showTableHD_find() {
         ModelFind.setRowCount(0);
-        for(quanlyhoadon hd: a.findbySDT(sdt)){
-            Object dataRow[]=new Object[5];
-            dataRow[0]=hd.getMahd();
-            dataRow[1]=hd.getSdt();
-            dataRow[2]=hd.getTennv();
-            dataRow[3]=hd.getDate_Buy();
-            dataRow[4]=hd.getThanhTien();
+        for (quanlyhoadon hd : a.findbySDT(sdt)) {
+            Object dataRow[] = new Object[5];
+            dataRow[0] = hd.getMahd();
+            dataRow[1] = hd.getSdt();
+            dataRow[2] = hd.getTennv();
+            dataRow[3] = hd.getDate_Buy();
+            dataRow[4] = hd.getThanhTien();
             ModelFind.addRow(dataRow);
-            
+
         }
     }
-  //show bảng hóa đơn rỗng
-  public void showTableHD() {
+    //show bảng hóa đơn rỗng
+
+    public void showTableHD() {
         ModelFind.setRowCount(0);
-       
+
         for (quanlyhoadon s : hoadon) {
             Object[] row = new Object[]{
-                table_find.getRowCount() + 1, s.getMahd(), s.getSdt(), s.getTennv(), s.getDate_Buy(),s.getThanhTien()};
-           ModelFind.addRow(row);
+                table_find.getRowCount() + 1, s.getMahd(), s.getSdt(), s.getTennv(), s.getDate_Buy(), s.getThanhTien()};
+            ModelFind.addRow(row);
         }
 
     }
 //hiển thị bảng chi tiết hóa đơn khi tìm kiếm hóa đơn
+
     public void showTableSPCT() {
         ModelSPCT.setRowCount(0);
-       
+
         for (chi_tiet_hd s : sanphamct) {
             Object[] row = new Object[]{
                 table_chitiet.getRowCount() + 1, s.getTen_sp(), s.getSo_luong(), s.getGiaban(), s.getGia()};
@@ -83,19 +87,20 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
         }
 
     }
+
     //hiển thị bảng chi tiết hóa đơn khi bấm reset
     public void showTableSPCT_themmoi() {
         sanphamct.clear();
         showTableSPCT();
-      
+
     }
+
     //hiển thị bảng hóa đơn khi bấm reset
-    public void showTableHD_themmoi()
-    {
+    public void showTableHD_themmoi() {
         hoadon.clear();
         showTableHD();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,33 +111,43 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jSdt = new javax.swing.JTextField();
-        jFind = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_find = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        table_chitiet = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table_chitiet = new javax.swing.JTable();
+        jSdt = new javax.swing.JTextField();
+        jFind = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tìm kiếm hóa đơn theo ngày");
 
-        jLabel1.setText("Tìm kiếm hóa đơn");
+        jPanel1.setBackground(new java.awt.Color(237, 250, 253));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Số điện thoại khách");
 
-        jFind.setText("Tìm");
-        jFind.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/home.png"))); // NOI18N
+        jButton2.setText("Home");
+        jButton2.setToolTipText("Quay về Trang chủ");
+        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFindActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         table_find.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,20 +167,12 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(table_find);
 
-        table_chitiet.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "STT", "Mã sản phẩm", "Số lượng", "Gía bán", "Tổng"
-            }
-        ));
-        jScrollPane2.setViewportView(table_chitiet);
-
-        jButton1.setText("Reset");
+        jButton1.setBackground(new java.awt.Color(139, 203, 200));
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Reset-icon.png"))); // NOI18N
+        jButton1.setText("Nhập lại");
+        jButton1.setToolTipText("Nhập lại");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -174,80 +181,117 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
 
         jLabel4.setText("HÓA ĐƠN");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("CHI TIẾT HÓA ĐƠN");
 
-        jButton2.setText("thoat");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(3, 115, 103));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Tìm kiếm hóa đơn");
+
+        table_chitiet.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "STT", "Mã sản phẩm", "Số lượng", "Giá bán", "Tổng"
+            }
+        ));
+        jScrollPane2.setViewportView(table_chitiet);
+        if (table_chitiet.getColumnModel().getColumnCount() > 0) {
+            table_chitiet.getColumnModel().getColumn(0).setMinWidth(50);
+            table_chitiet.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jSdt.setToolTipText("Nhập số điện thoại của khách");
+
+        jFind.setBackground(new java.awt.Color(139, 203, 200));
+        jFind.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jFind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
+        jFind.setText("Tìm kiếm");
+        jFind.setToolTipText("Tìm kiếm");
+        jFind.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
+        jFind.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jFindActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25)
+                                .addComponent(jFind)
+                                .addGap(116, 116, 116)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(73, 73, 73))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(552, 552, 552))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jFind, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(252, 252, 252)
-                .addComponent(jLabel5)
-                .addGap(387, 387, 387))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jFind)
-                            .addComponent(jButton1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel3)
-                        .addGap(65, 65, 65)
-                        .addComponent(jSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1089, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1)
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jSdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(jFind)
-                        .addGap(33, 33, 33)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36))))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -255,10 +299,10 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
 // tìm 
     private void jFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFindActionPerformed
         // TODO add your handling code here:
-        sdt=jSdt.getText();
+        sdt = jSdt.getText();
         System.out.println(sdt);
         showTableHD_find();
-        
+
     }//GEN-LAST:event_jFindActionPerformed
 // click trong bảng hóa đơn
     private void table_findMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_findMouseClicked
@@ -282,7 +326,7 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         dispose();
-        Hoadon h= new Hoadon();
+        Hoadon h = new Hoadon();
         h.show();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -338,6 +382,7 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jSdt;
@@ -345,5 +390,4 @@ public class FindBillBy_sdt extends javax.swing.JDialog {
     private javax.swing.JTable table_find;
     // End of variables declaration//GEN-END:variables
 
-    
 }

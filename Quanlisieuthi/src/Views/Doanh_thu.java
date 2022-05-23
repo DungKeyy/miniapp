@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import model.quanlyhoadon;
 
 /**
- *    
+ *
  * @author Admin
  */
 public class Doanh_thu extends javax.swing.JFrame {
@@ -21,34 +21,56 @@ public class Doanh_thu extends javax.swing.JFrame {
     /**
      * Creates new form Doanh_thu
      */
-   private List<quanlyhoadon> hoadon;
+    private List<quanlyhoadon> hoadon;
     HoaDonModify a = new HoaDonModify();
     private DefaultTableModel ModelDT;
-    String date="";
-    public Doanh_thu(){
+    String date = "";
+    String selectedItem = "";//tháng
+
+    public Doanh_thu() {
         initComponents();
-        setLocationRelativeTo(null);
-        ModelDT =(DefaultTableModel) table_doanhthu.getModel();
-        showTable();
+        this.setLocationRelativeTo(null);
+        ModelDT = (DefaultTableModel) table_doanhthu.getModel();
+        showTable_date();
+        showTable_month();
     }
-    public void showTable()
-    {
-         ModelDT.setRowCount(0);
-         int tonggia = 0;
+//Bảng tìm kiếm doanh thu theo ngày
+    public void showTable_date() {
+        ModelDT.setRowCount(0);
+        int tonggia = 0;
         for (quanlyhoadon hd : a.findbyDate(date)) {//
-            Object dataRow[]=new Object[3];
-            dataRow[0]=hd.getMahd();
-            dataRow[1]=hd.getDate_Buy();
-            dataRow[2]=hd.getThanhTien();
+            Object dataRow[] = new Object[3];
+            dataRow[0] = hd.getMahd();
+            dataRow[1] = hd.getDate_Buy();
+            dataRow[2] = hd.getThanhTien();
             ModelDT.addRow(dataRow);
 
         }
-       for (int i = 0; i < table_doanhthu.getRowCount(); i++) {
+        for (int i = 0; i < table_doanhthu.getRowCount(); i++) {
             tonggia += Integer.parseInt(table_doanhthu.getValueAt(i, 2).toString());
         }
-        j_tong.setText("Tổng doanh thu: "+tonggia + " VND");
-        
+        j_tong.setText("Tổng doanh thu: " + tonggia + " VND");
+
     }
+//Bảng tìm kiếm doanh thu theo tháng
+    public void showTable_month() {
+        ModelDT.setRowCount(0);
+        int tonggia = 0;
+        for (quanlyhoadon hd : a.findbyMonth(selectedItem)) {//
+            Object dataRow[] = new Object[3];
+            dataRow[0] = hd.getMahd();
+            dataRow[1] = hd.getDate_Buy();
+            dataRow[2] = hd.getThanhTien();
+            ModelDT.addRow(dataRow);
+
+        }
+        for (int i = 0; i < table_doanhthu.getRowCount(); i++) {
+            tonggia += Integer.parseInt(table_doanhthu.getValueAt(i, 2).toString());
+        }
+        j_tong.setText("Tổng doanh thu: " + tonggia + " VND");
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,14 +82,15 @@ public class Doanh_thu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnFind = new javax.swing.JButton();
+        btnFind_day = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_doanhthu = new javax.swing.JTable();
         j_tong = new javax.swing.JLabel();
-        DateChooser = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        combox_mon = new javax.swing.JComboBox<>();
+        DateChooser = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DOANH THU BÁN HÀNG");
@@ -79,12 +102,12 @@ public class Doanh_thu extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DOANH THU BÁN HÀNG");
 
-        btnFind.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnFind.setText("Tìm kiếm");
-        btnFind.setToolTipText("");
-        btnFind.addActionListener(new java.awt.event.ActionListener() {
+        btnFind_day.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnFind_day.setText("Tìm kiếm theo ngày");
+        btnFind_day.setToolTipText("Tìm kiếm theo ngày");
+        btnFind_day.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindActionPerformed(evt);
+                btnFind_dayActionPerformed(evt);
             }
         });
 
@@ -111,35 +134,54 @@ public class Doanh_thu extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(table_doanhthu);
         if (table_doanhthu.getColumnModel().getColumnCount() > 0) {
-            table_doanhthu.getColumnModel().getColumn(0).setMinWidth(70);
-            table_doanhthu.getColumnModel().getColumn(0).setMaxWidth(70);
+            table_doanhthu.getColumnModel().getColumn(0).setMinWidth(90);
+            table_doanhthu.getColumnModel().getColumn(0).setMaxWidth(90);
         }
-
-        jScrollPane1.setViewportView(jScrollPane2);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        j_tong.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         j_tong.setText("Tổng Doanh Thu: ");
 
-        jButton1.setText("thoat");
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/home.png"))); // NOI18N
+        jButton1.setText("Home");
+        jButton1.setToolTipText("Quay về Trang chủ");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton2.setText("Tìm kiếm theo tháng");
+        jButton2.setToolTipText("Tìm kiếm theo tháng");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        combox_mon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tháng", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
+        combox_mon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                combox_monActionPerformed(evt);
             }
         });
 
@@ -148,35 +190,48 @@ public class Doanh_thu extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(btnFind)
-                        .addGap(87, 87, 87)
-                        .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton1))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2)
+                            .addComponent(btnFind_day, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51)
+                                .addComponent(jButton1))
+                            .addComponent(combox_mon, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(j_tong)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addComponent(j_tong, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFind_day, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(combox_mon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(j_tong)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(j_tong, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,27 +242,42 @@ public class Doanh_thu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-// tìm kiếm
-    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
+// tìm kiếm theo ngày
+    private void btnFind_dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind_dayActionPerformed
         // TODO add your handling code here:
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
-       date=dateFormat.format(DateChooser.getDate());
-        System.out.println("test date ne: "+date);
-        showTable();
-    }//GEN-LAST:event_btnFindActionPerformed
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        date = dateFormat.format(DateChooser.getDate());
+        System.out.println("test date ne: " + date);
+        showTable_date();
+    }//GEN-LAST:event_btnFind_dayActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         dispose();
-                        //Home_Quanli ah = new  Home_Quanli();
-                        Home_Quanli ah= new Home_Quanli();
-                      ah.show();
+        //Home_Quanli ah = new  Home_Quanli();
+        Home_Quanli ah = new Home_Quanli();
+        ah.show();
     }//GEN-LAST:event_jButton1ActionPerformed
+// tìm kiếm theo tháng
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        selectedItem = (String) combox_mon.getSelectedItem();
+        System.out.println("Test Lua chon: " + selectedItem);
+        showTable_month();
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void combox_monActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combox_monActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_combox_monActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,12 +316,13 @@ public class Doanh_thu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateChooser;
-    private javax.swing.JButton btnFind;
+    private javax.swing.JButton btnFind_day;
+    private javax.swing.JComboBox<String> combox_mon;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel j_tong;
     private javax.swing.JTable table_doanhthu;

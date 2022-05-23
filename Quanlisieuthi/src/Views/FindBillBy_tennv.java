@@ -25,69 +25,71 @@ public class FindBillBy_tennv extends javax.swing.JDialog {
     /**
      * Creates new form FindBillBy_sdt
      */
-   Connection conn=null;
-    PreparedStatement pst=null;
-    ResultSet rs=null;
+    Connection conn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     private Hoadon home;
-   
-   Chitet_hdModify dao = new Chitet_hdModify();
+
+    Chitet_hdModify dao = new Chitet_hdModify();
     HoaDonModify a = new HoaDonModify();
-    ArrayList<quanlyhoadon> hoadon=new ArrayList<>();
+    ArrayList<quanlyhoadon> hoadon = new ArrayList<>();
     ArrayList<chi_tiet_hd> sanphamct = new ArrayList<>();
     private DefaultTableModel ModelFind;
     private DefaultTableModel ModelSPCT;
     int selectedIndex;
-    String selectedItem="";
+    String selectedItem = "";
+
     public FindBillBy_tennv(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        conn= databaseUtils.getDBConnect();
+        conn = databaseUtils.getDBConnect();
         this.setLocationRelativeTo(null);
         this.setTitle("Tìm kiếm hóa đơn bằng tên nhân viên");
-        home=(Hoadon) parent;
-      ModelFind=(DefaultTableModel) table_find.getModel();
-      ModelSPCT=(DefaultTableModel) table_chitiet.getModel();
+        home = (Hoadon) parent;
+        ModelFind = (DefaultTableModel) table_find.getModel();
+        ModelSPCT = (DefaultTableModel) table_chitiet.getModel();
         showTableHD_find();
         showTableSPCT();
         updateCombox();
     }
+
     // đẩy dữ liệu lên jcombox
-    public void updateCombox(){
-        String sql="SELECT ten_nv FROM nhanvien";
+    public void updateCombox() {
+        String sql = "SELECT ten_nv FROM nhanvien";
         try {
-            pst=conn.prepareStatement(sql);
-            rs=pst.executeQuery();
-            while(rs.next())
-            {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
                 jComboBox1.addItem(rs.getString("ten_nv"));
             }
         } catch (Exception e) {
         }
     }
+
     //hiển thị bảng hóa đơn khi tìm kiếm
-  public void showTableHD_find(){
+    public void showTableHD_find() {
         ModelFind.setRowCount(0);
-        for(quanlyhoadon hd: a.findbyName2(selectedItem)){
-            Object dataRow[]=new Object[5];
-            dataRow[0]=hd.getMahd();
-            dataRow[1]=null;
-            dataRow[2]=hd.getTennv();
-            dataRow[3]=hd.getDate_Buy();
-            dataRow[4]=hd.getThanhTien();
-            ModelFind.addRow(dataRow);    
+        for (quanlyhoadon hd : a.findbyName2(selectedItem)) {
+            Object dataRow[] = new Object[5];
+            dataRow[0] = hd.getMahd();
+            dataRow[1] = null;
+            dataRow[2] = hd.getTennv();
+            dataRow[3] = hd.getDate_Buy();
+            dataRow[4] = hd.getThanhTien();
+            ModelFind.addRow(dataRow);
         }
-        for(quanlyhoadon hd: a.findbyName1(selectedItem)){
-            Object dataRow[]=new Object[5];
-            dataRow[0]=hd.getMahd();
-            dataRow[1]=hd.getSdt();
-            dataRow[2]=hd.getTennv();
-            dataRow[3]=hd.getDate_Buy();
-            dataRow[4]=hd.getThanhTien();
-            ModelFind.addRow(dataRow);    
+        for (quanlyhoadon hd : a.findbyName1(selectedItem)) {
+            Object dataRow[] = new Object[5];
+            dataRow[0] = hd.getMahd();
+            dataRow[1] = hd.getSdt();
+            dataRow[2] = hd.getTennv();
+            dataRow[3] = hd.getDate_Buy();
+            dataRow[4] = hd.getThanhTien();
+            ModelFind.addRow(dataRow);
         }
-        
+
     }
-  
+
 //hiển thị bảng chi tiết hóa đơn khi tìm kiếm hóa đơn
     public void showTableSPCT() {
         ModelSPCT.setRowCount(0);
@@ -98,8 +100,30 @@ public class FindBillBy_tennv extends javax.swing.JDialog {
         }
 
     }
-    
-    
+ //hiển thị bảng chi tiết hóa đơn khi bấm reset
+    public void showTableSPCT_themmoi() {
+        sanphamct.clear();
+        showTableSPCT();
+
+    }
+
+    //hiển thị bảng hóa đơn khi bấm reset
+    public void showTableHD_themmoi() {
+        hoadon.clear();
+        showTableHD();
+    }
+//show bảng hóa đơn rỗng
+
+    public void showTableHD() {
+        ModelFind.setRowCount(0);
+
+        for (quanlyhoadon s : hoadon) {
+            Object[] row = new Object[]{
+                table_find.getRowCount() + 1, s.getMahd(), s.getSdt(), s.getTennv(), s.getDate_Buy(), s.getThanhTien()};
+            ModelFind.addRow(row);
+        }
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,25 +134,25 @@ public class FindBillBy_tennv extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_find = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_chitiet = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tìm kiếm nhân viên");
 
-        jLabel1.setText("Tìm kiếm hóa đơn");
-
-        jLabel3.setText("Tên nhân viên");
+        jPanel1.setBackground(new java.awt.Color(237, 250, 253));
 
         table_find.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -138,7 +162,7 @@ public class FindBillBy_tennv extends javax.swing.JDialog {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Mã hóa đơn", "SDT khách", "Mã nhân viên", "Ngày tạo", "Thanh toán"
+                "Mã hóa đơn", "SĐT khách", "Mã nhân viên", "Ngày tạo", "Thanh toán"
             }
         ));
         table_find.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -148,22 +172,17 @@ public class FindBillBy_tennv extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(table_find);
 
-        table_chitiet.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "STT", "Mã sản phẩm", "Số lượng", "Gía bán", "Tổng"
-            }
-        ));
-        jScrollPane2.setViewportView(table_chitiet);
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(3, 115, 103));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Tìm kiếm hóa đơn");
 
-        jLabel4.setText("HÓA ĐƠN");
-
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("CHI TIẾT HÓA ĐƠN");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Tên nhân viên");
+        jLabel3.setToolTipText("");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -172,78 +191,110 @@ public class FindBillBy_tennv extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Tìm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("HÓA ĐƠN");
 
-        jButton2.setText("thoat");
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/home.png"))); // NOI18N
+        jButton2.setText("Home");
+        jButton2.setToolTipText("Quay trở về Trang chủ");
+        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
+        table_chitiet.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "STT", "Mã sản phẩm", "Số lượng", "Giá bán", "Tổng"
+            }
+        ));
+        jScrollPane2.setViewportView(table_chitiet);
+        if (table_chitiet.getColumnModel().getColumnCount() > 0) {
+            table_chitiet.getColumnModel().getColumn(0).setMinWidth(50);
+            table_chitiet.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jButton1.setBackground(new java.awt.Color(139, 203, 200));
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
+        jButton1.setText("Tìm kiếm");
+        jButton1.setToolTipText("Tìm kiếm");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(442, 442, 442)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(252, 252, 252)
-                .addComponent(jLabel5)
-                .addGap(387, 387, 387))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel3)
-                        .addGap(46, 46, 46)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jButton1))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(jButton2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -263,20 +314,22 @@ public class FindBillBy_tennv extends javax.swing.JDialog {
 // lựa chọn tìm kiếm combox
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        
+        showTableSPCT_themmoi();
+        showTableHD_themmoi();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 // tìm kiếm
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        selectedItem=(String) jComboBox1.getSelectedItem();
-        System.out.println("Test Lua chon: "+selectedItem);
+        selectedItem = (String) jComboBox1.getSelectedItem();
+        System.out.println("Test Lua chon: " + selectedItem);
         showTableHD_find();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         dispose();
-        Hoadon h= new Hoadon();
+        Hoadon h = new Hoadon();
         h.show();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -334,11 +387,11 @@ public class FindBillBy_tennv extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable table_chitiet;
     private javax.swing.JTable table_find;
     // End of variables declaration//GEN-END:variables
 
-    
 }

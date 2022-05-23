@@ -23,7 +23,7 @@ public class KhachHang_frBan extends javax.swing.JFrame {
     CustomerModify dao= new CustomerModify();
     public KhachHang_frBan() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
     }
     
   
@@ -97,6 +97,7 @@ public class KhachHang_frBan extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(237, 250, 253));
 
         Jsdt.setToolTipText("Nhập số điện thoại khách");
+        Jsdt.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(193, 217, 214)));
 
         Bquaylai.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         Bquaylai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/home.png"))); // NOI18N
@@ -118,6 +119,7 @@ public class KhachHang_frBan extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
 
         JTenkh.setToolTipText("Nhập tên khách hàng");
+        JTenkh.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(193, 217, 214)));
 
         BAdd.setBackground(new java.awt.Color(139, 203, 200));
         BAdd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -137,6 +139,7 @@ public class KhachHang_frBan extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Số điện thoại");
 
+        BReset.setBackground(new java.awt.Color(139, 203, 200));
         BReset.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         BReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Reset-icon.png"))); // NOI18N
         BReset.setText("Nhập lại");
@@ -154,27 +157,28 @@ public class KhachHang_frBan extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(Bquaylai)
+                                .addGap(38, 38, 38)
+                                .addComponent(BAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BReset, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(JTenkh, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                    .addComponent(Jsdt))))
+                        .addContainerGap(28, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(Bquaylai)
-                            .addGap(18, 18, 18)
-                            .addComponent(BAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(BReset, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(JTenkh, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-                                .addComponent(Jsdt)))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,10 +225,16 @@ public class KhachHang_frBan extends javax.swing.JFrame {
          if(validateForm_add()){
            Customer pr=getModel_add();
            try {
-               if(dao.add(pr)>0){
+               if(dao.getCustomerByName(Jsdt.getText())==null){
+                    if(dao.add(pr)>0){
                    reset();
                    JOptionPane.showMessageDialog(this, "Thêm thành công");
                     
+               }
+               }
+               else{
+                   JOptionPane.showMessageDialog(this, "Khách hàng đã có tài khoản!");
+                   reset();
                }
                
            } catch (Exception e) {
